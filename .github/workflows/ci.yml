@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: token-trek
+      - name: Lint
+        run: pnpm lint
+        working-directory: token-trek
+      - name: Build
+        run: pnpm build
+        working-directory: token-trek
+      - name: Test
+        run: pnpm test
+        working-directory: token-trek
