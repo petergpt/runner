@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
 # ============================================================================
-# Token Trek — Codex setup script (network-on bootstrap)
+# Token Trek — Codex setup script (network‑on bootstrap, Tailwind v4 friendly)
 # ============================================================================
-
 set -euo pipefail
 
 ##############################################################################
-# 1 ▸ Pin & activate the tool-chain
+# 1 ▸ Pin & activate the tool‑chain
 ##############################################################################
-export CODEX_ENV_NODE_VERSION=20          # Node 20 from codex-universal
+export CODEX_ENV_NODE_VERSION=20          # Node 20 from codex‑universal
 corepack enable
 corepack prepare pnpm@latest --activate   # pin pnpm
 
 ##############################################################################
-# 2 ▸ Scaffold project (non-interactive)
+# 2 ▸ Scaffold project (non‑interactive)
 ##############################################################################
 if [ ! -d "token-trek" ]; then
-  # grab Vite’s react-ts starter without the wizard
   pnpm dlx degit \
     "github:vitejs/vite/packages/create-vite/template-react-ts" \
     token-trek
@@ -38,12 +36,21 @@ pnpm add -D vite vitest @vitest/coverage-v8 \
   tailwindcss postcss autoprefixer @tailwindcss/cli
 
 ##############################################################################
-# 5 ▸ Tailwind defaults (safe when files already exist)
+# 5 ▸ Minimal Tailwind config (since `tailwindcss init` is gone in v4)
 ##############################################################################
-pnpm exec tailwindcss init -p || true     # uses @tailwindcss/cli binary
+if [ ! -f tailwind.config.js ] && [ ! -f tailwind.config.ts ]; then
+cat <<'EOF' > tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: { extend: {} },
+  plugins: [],
+};
+EOF
+fi
 
 ##############################################################################
 # 6 ▸ Prime the build & tests while network is available
 ##############################################################################
 pnpm run build                            # vite build
-pnpm exec vitest --run --passWithNoTests  # exits 0 even if no tests yet
+pnpm exec vitest --run --passWithNoTests  # exits 0 even if no tests yet
