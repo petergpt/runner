@@ -4,6 +4,7 @@ import type { ThreeElements } from '@react-three/fiber'
 import { useFrame } from '@react-three/fiber'
 import type { Mesh } from 'three'
 import { contextWindowClamp } from '../game/contextWindowClamp'
+import { usePlayerStore } from '../store/playerStore'
 
 const LANE_WIDTH = 2
 const JUMP_VELOCITY = 8
@@ -12,16 +13,17 @@ const FLOOR_Y = 0.5
 
 const Player: FC<ThreeElements['mesh']> = (props) => {
   const meshRef = useRef<Mesh>(null!)
-  const lane = useRef(1)
+  const lane = usePlayerStore((s) => s.lane)
+  const setLane = usePlayerStore((s) => s.setLane)
   const velocityY = useRef(0)
   const jumping = useRef(false)
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === 'KeyA' || e.code === 'ArrowLeft') {
-        lane.current = contextWindowClamp(lane.current - 1)
+        setLane(contextWindowClamp(lane - 1))
       } else if (e.code === 'KeyD' || e.code === 'ArrowRight') {
-        lane.current = contextWindowClamp(lane.current + 1)
+        setLane(contextWindowClamp(lane + 1))
       } else if (e.code === 'Space' && !jumping.current) {
         jumping.current = true
         velocityY.current = JUMP_VELOCITY
@@ -29,11 +31,11 @@ const Player: FC<ThreeElements['mesh']> = (props) => {
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [lane, setLane])
 
   useFrame((_, delta) => {
     const mesh = meshRef.current
-    mesh.position.x = (-1 + lane.current) * LANE_WIDTH
+    mesh.position.x = (-1 + lane) * LANE_WIDTH
     if (jumping.current) {
       velocityY.current += GRAVITY * delta
       mesh.position.y += velocityY.current * delta

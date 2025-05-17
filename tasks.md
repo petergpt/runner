@@ -26,7 +26,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Rate‑Limit Gates that close across a lane.
    - Sequence‑Length Walls appearing after ~30 s that require jumping.
 
-6. **Collectibles and Scoring**
+6. **Collectibles and Scoring** ✅ *Complete*
    - Useful Token pickups that extend a score multiplier.
    - Display token count and tokens‑per‑second.
 
