@@ -26,10 +26,12 @@ const GameScene: FC = () => {
   const wallRef           = useRef<Mesh>(null!)
 
   const isGameOver = useGameStore((s) => s.isGameOver)
+  const isGameWon = useGameStore((s) => s.isGameWon)
   const shrinkMaxHealth = useGameStore((s) => s.shrinkMaxHealth)
   const checkpointRef = useRef(0)
 
   useFrame(({ clock }) => {
+    if (isGameOver || isGameWon) return
     const elapsed = clock.getElapsedTime()
     if (elapsed - checkpointRef.current >= 15) {
       shrinkMaxHealth(10)
@@ -71,8 +73,8 @@ const GameScene: FC = () => {
         <OrbitControls />
       </Canvas>
 
-      {/* Simple overlay when the store flags game-over */}
-      {isGameOver && (
+      {/* Simple overlays when the store flags game-over or win */}
+      {(isGameOver || isGameWon) && (
         <div
           style={{
             position: 'absolute',
@@ -84,7 +86,7 @@ const GameScene: FC = () => {
             pointerEvents: 'none',
           }}
         >
-          Game Over
+          {isGameWon ? 'AGI Achieved!' : 'Game Over'}
         </div>
       )}
     </>

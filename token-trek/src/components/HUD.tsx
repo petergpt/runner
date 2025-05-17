@@ -1,5 +1,5 @@
 import type { FC, CSSProperties } from 'react'
-import { useGameStore } from '../store/gameStore'
+import { useGameStore, AGI_GOAL } from '../store/gameStore'
 import styles from './HUD.module.css'
 
 const HUD: FC = () => {
@@ -18,7 +18,7 @@ const HUD: FC = () => {
         <div className={styles.healthBar} style={barStyle} />
       </div>
       <div className={styles.stats}>
-        <div>Tokens: {tokenCount.toFixed(0)}</div>
+        <div>Tokens: {tokenCount.toFixed(0)} / {AGI_GOAL}</div>
         <div>T/s: {tokensPerSecond.toFixed(2)}</div>
       </div>
     </div>

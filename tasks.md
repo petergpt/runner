@@ -49,7 +49,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
     - Bloom or glitch post‑processing with `EffectComposer`.
     - Maintain 60 FPS on typical laptop GPUs.
 
-11. **Game Over & Win State**
+11. **Game Over & Win State** ✅ *Complete*
     - Trigger win condition upon reaching an AGI milestone.
     - Show game over screen when the player loses all health.
 
