@@ -1,8 +1,9 @@
 import type { FC } from 'react'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import type { ThreeElements } from '@react-three/fiber'
 import { useFrame } from '@react-three/fiber'
 import type { Mesh } from 'three'
+import { useGameStore } from '../../store/gameStore'
 
 /**
  * A red cube that rotates continuously.
@@ -10,6 +11,11 @@ import type { Mesh } from 'three'
  */
 const PromptInjectionCube: FC<ThreeElements['mesh']> = (props) => {
   const meshRef = useRef<Mesh>(null!)
+  const active = useGameStore((s) => s.systemPromptActive)
+
+  useEffect(() => {
+    if (meshRef.current) meshRef.current.visible = !active
+  }, [active])
   useFrame((_, delta) => {
     meshRef.current.rotation.x += delta
     meshRef.current.rotation.y += delta

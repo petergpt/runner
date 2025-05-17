@@ -72,7 +72,7 @@ const Player: FC<PlayerProps> = ({ obstacles = [], ...props }) => {
     playerBox.current.setFromObject(mesh)
     obstacles.forEach((oRef) => {
       const o = oRef.current
-      if (!o || collided.current.has(o)) return
+      if (!o || !o.visible || collided.current.has(o)) return
       obstacleBox.current.setFromObject(o)
       if (playerBox.current.intersectsBox(obstacleBox.current)) {
         collided.current.add(o)
