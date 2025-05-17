@@ -104,3 +104,33 @@ are met.
 Tasks from different groups can be assigned to separate agents to minimize pull
 request conflicts.
 
+
+## Additional Tasks
+
+13. **Endless Track Integration**
+    - Use `trackChunkGenerator` inside `GameScene` to create a scrolling track.
+    - Recycle chunks as they move behind the player to save memory.
+
+14. **Dynamic Obstacles and Tokens**
+    - Spawn obstacles and tokens procedurally along each track chunk.
+    - Remove or deactivate items once they pass the player.
+
+15. **HUD Improvements**
+    - Display token progress as `token_count / 8192` per spec.
+    - Show a win screen when the counter reaches 8192 tokens.
+
+16. **RAG Portal Enhancement**
+    - Teleport the player to a temporary bonus lane filled with tokens.
+    - Return to the normal lanes after the portal effect ends.
+
+17. **Game Flow & Restart**
+    - Add a start menu and allow restarting after game over or win.
+    - Store the best token count in `localStorage` as a high score.
+
+18. **Audio & Feedback**
+    - Provide placeholders for sound effects on token collect, collisions and power-ups.
+    - Document where users can drop custom audio files.
+
+19. **Cleanup & Error Handling**
+    - Clear any `setTimeout` timers when components unmount.
+    - Add React error boundaries around the game scene to surface issues.
