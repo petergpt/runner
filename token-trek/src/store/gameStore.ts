@@ -8,9 +8,17 @@ import { create } from 'zustand'
 interface GameState {
   /* Health & fail state */
   health: number
+  maxHealth: number
   isGameOver: boolean
   reduceHealth: (amount: number) => void
   resetHealth: () => void
+  shrinkMaxHealth: (amount: number) => void
+
+  /* Power-up state */
+  systemPromptActive: boolean
+  activateSystemPrompt: () => void
+  ragPortalActive: boolean
+  activateRagPortal: () => void
 
   /* Token / score system */
   tokenCount: number
@@ -23,13 +31,36 @@ interface GameState {
 export const useGameStore = create<GameState>((set, get) => ({
   /* ── health subsystem ─────────────────────────────────────────────── */
   health: 100,
+  maxHealth: 100,
   isGameOver: false,
   reduceHealth: (amount: number) =>
     set((state) => {
-      const nextHealth = state.health - amount
+      const nextHealth = Math.max(state.health - amount, 0)
       return { health: nextHealth, isGameOver: nextHealth <= 0 }
     }),
-  resetHealth: () => set({ health: 100, isGameOver: false }),
+  resetHealth: () => set({ health: 100, maxHealth: 100, isGameOver: false }),
+  shrinkMaxHealth: (amount: number) =>
+    set((state) => {
+      const newMax = Math.max(state.maxHealth - amount, 0)
+      const newHealth = Math.min(state.health, newMax)
+      return {
+        maxHealth: newMax,
+        health: newHealth,
+        isGameOver: newHealth <= 0,
+      }
+    }),
+
+  /* ── power-ups ───────────────────────────────────────────────────── */
+  systemPromptActive: false,
+  activateSystemPrompt: () => {
+    set({ systemPromptActive: true })
+    setTimeout(() => set({ systemPromptActive: false }), 3000)
+  },
+  ragPortalActive: false,
+  activateRagPortal: () => {
+    set({ ragPortalActive: true })
+    setTimeout(() => set({ ragPortalActive: false }), 3000)
+  },
 
   /* ── token / scoring subsystem ─────────────────────────────────────── */
   tokenCount: 0,

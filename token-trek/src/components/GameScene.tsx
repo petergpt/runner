@@ -1,12 +1,14 @@
 import type { FC } from 'react'
 import { useRef } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import type { Mesh } from 'three'
 
 import Player from './Player'
 import Token from './Token'
 import Obstacle from './Obstacle'
+import SystemPromptPowerUp from './SystemPromptPowerUp'
+import RAGPortal from './RAGPortal'
 import {
   PromptInjectionCube,
   RateLimitGate,
@@ -22,6 +24,16 @@ const GameScene: FC = () => {
   const wallRef           = useRef<Mesh>(null!)
 
   const isGameOver = useGameStore((s) => s.isGameOver)
+  const shrinkMaxHealth = useGameStore((s) => s.shrinkMaxHealth)
+  const checkpointRef = useRef(0)
+
+  useFrame(({ clock }) => {
+    const elapsed = clock.getElapsedTime()
+    if (elapsed - checkpointRef.current >= 15) {
+      shrinkMaxHealth(10)
+      checkpointRef.current = elapsed
+    }
+  })
 
   return (
     <>
@@ -40,6 +52,8 @@ const GameScene: FC = () => {
 
         {/* Collectible */}
         <Token position={[0, 0.5, -3]} />
+        <SystemPromptPowerUp position={[0, 0.5, -6]} />
+        <RAGPortal position={[0, 0.5, -9]} />
 
         {/* Obstacles */}
         <Obstacle ref={genericObstacleRef} position={[0, 0.5, -2]} />

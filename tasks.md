@@ -34,7 +34,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Implement context‑integrity (health) reduction on collisions.
    - End the run when health reaches zero.
 
-8. **LLM‑Flavored Mechanics**
+8. **LLM‑Flavored Mechanics** ✅ *Complete*
    - Summarization Checkpoint every 15 s that shrinks the health bar.
    - Power‑ups:
      - System Prompt – clear red cubes for 3 s.
