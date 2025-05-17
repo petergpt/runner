@@ -7,7 +7,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Enable TypeScript strict mode and configure ESLint + Prettier.
    - Verify the base Vite + React + TypeScript scaffold builds and lints.
 
-2. **Initial 3D Scene**
+2. **Initial 3D Scene** ✅ *Complete*
    - Set up a basic `three` / `@react-three/fiber` scene.
    - Add a camera and minimal lighting.
    - Create a placeholder player model.
