@@ -57,11 +57,13 @@ collecting “useful” tokens to keep your model coherent.
 ## Local commands
 
 ```bash
-pnpm install        # run once (setup.sh will call this)
+cd token-trek
+pnpm install        # run once (setup_script will call this)
 pnpm dev            # Vite dev server with HMR
 pnpm build          # production build   (must succeed)
 pnpm test           # unit tests         (vitest)
 pnpm lint           # code style
+pnpm format         # Prettier
 
 ## Tech stack
 
