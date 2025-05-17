@@ -15,6 +15,8 @@ const SystemPromptPowerUp: FC<ThreeElements['mesh']> = (props) => {
   const meshRef = useRef<Mesh>(null!)
   const lane = usePlayerStore((s) => s.lane)
   const activate = useGameStore((s) => s.activateSystemPrompt)
+  const isGameOver = useGameStore((s) => s.isGameOver)
+  const isGameWon = useGameStore((s) => s.isGameWon)
 
   const reset = () => {
     if (!meshRef.current) return
@@ -28,6 +30,7 @@ const SystemPromptPowerUp: FC<ThreeElements['mesh']> = (props) => {
   }, [])
 
   useFrame((_, dt) => {
+    if (isGameOver || isGameWon) return
     const mesh = meshRef.current
     mesh.rotation.y += dt
     mesh.position.z -= SPEED * dt

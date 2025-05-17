@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import type { ThreeElements } from '@react-three/fiber'
 import { useFrame } from '@react-three/fiber'
 import type { Mesh } from 'three'
+import { useGameStore } from '../../store/gameStore'
 
 /**
  * A wall that appears after a delay, forcing the player to jump.
@@ -15,7 +16,10 @@ interface Props extends MeshProps {
 
 const SequenceLengthWall: FC<Props> = ({ appearAfter = 30, ...props }) => {
   const meshRef = useRef<Mesh>(null!)
+  const isGameOver = useGameStore((s) => s.isGameOver)
+  const isGameWon = useGameStore((s) => s.isGameWon)
   useFrame(({ clock }) => {
+    if (isGameOver || isGameWon) return
     if (meshRef.current) {
       meshRef.current.visible = clock.getElapsedTime() >= appearAfter
     }

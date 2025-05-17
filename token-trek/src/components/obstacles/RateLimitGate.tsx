@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import type { ThreeElements } from '@react-three/fiber'
 import { useFrame } from '@react-three/fiber'
 import type { Mesh } from 'three'
+import { useGameStore } from '../../store/gameStore'
 
 /**
  * Two bars that slide together to block a lane.
@@ -10,7 +11,10 @@ import type { Mesh } from 'three'
 const RateLimitGate: FC<ThreeElements['group']> = (props) => {
   const leftRef = useRef<Mesh>(null!)
   const rightRef = useRef<Mesh>(null!)
+  const isGameOver = useGameStore((s) => s.isGameOver)
+  const isGameWon = useGameStore((s) => s.isGameWon)
   useFrame(({ clock }) => {
+    if (isGameOver || isGameWon) return
     const t = Math.sin(clock.getElapsedTime()) // -1..1
     const offset = 1 - Math.abs(t) // 0..1
     leftRef.current.position.x = -1 - offset

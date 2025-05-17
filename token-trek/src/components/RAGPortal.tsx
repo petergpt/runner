@@ -16,6 +16,8 @@ const RAGPortal: FC<ThreeElements['mesh']> = (props) => {
   const lane = usePlayerStore((s) => s.lane)
   const setLane = usePlayerStore((s) => s.setLane)
   const activate = useGameStore((s) => s.activateRagPortal)
+  const isGameOver = useGameStore((s) => s.isGameOver)
+  const isGameWon = useGameStore((s) => s.isGameWon)
 
   const reset = () => {
     if (!meshRef.current) return
@@ -29,6 +31,7 @@ const RAGPortal: FC<ThreeElements['mesh']> = (props) => {
   }, [])
 
   useFrame((_, dt) => {
+    if (isGameOver || isGameWon) return
     const mesh = meshRef.current
     mesh.rotation.y += dt
     mesh.position.z -= SPEED * dt

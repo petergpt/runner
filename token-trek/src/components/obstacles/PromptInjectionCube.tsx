@@ -12,11 +12,14 @@ import { useGameStore } from '../../store/gameStore'
 const PromptInjectionCube: FC<ThreeElements['mesh']> = (props) => {
   const meshRef = useRef<Mesh>(null!)
   const active = useGameStore((s) => s.systemPromptActive)
+  const isGameOver = useGameStore((s) => s.isGameOver)
+  const isGameWon = useGameStore((s) => s.isGameWon)
 
   useEffect(() => {
     if (meshRef.current) meshRef.current.visible = !active
   }, [active])
   useFrame((_, delta) => {
+    if (isGameOver || isGameWon) return
     meshRef.current.rotation.x += delta
     meshRef.current.rotation.y += delta
   })

@@ -33,6 +33,7 @@ const Player: FC<PlayerProps> = ({ obstacles = [], ...props }) => {
   const setLane     = usePlayerStore((s) => s.setLane)
   const reduceHealth= useGameStore((s) => s.reduceHealth)
   const isGameOver  = useGameStore((s) => s.isGameOver)
+  const isGameWon   = useGameStore((s) => s.isGameWon)
 
   /* Keyboard controls */
   useEffect(() => {
@@ -52,7 +53,7 @@ const Player: FC<PlayerProps> = ({ obstacles = [], ...props }) => {
 
   /* Per-frame logic */
   useFrame((_, dt) => {
-    if (isGameOver) return
+    if (isGameOver || isGameWon) return
 
     const mesh = meshRef.current
     mesh.position.x = (-1 + lane) * LANE_WIDTH   // snap to lane

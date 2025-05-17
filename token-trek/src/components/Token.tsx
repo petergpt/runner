@@ -16,6 +16,8 @@ const Token: FC<ThreeElements['mesh']> = (props) => {
   const lane = usePlayerStore((s) => s.lane)
   const collectToken = useGameStore((s) => s.collectToken)
   const ragPortalActive = useGameStore((s) => s.ragPortalActive)
+  const isGameOver = useGameStore((s) => s.isGameOver)
+  const isGameWon = useGameStore((s) => s.isGameWon)
 
   const resetToken = useCallback(() => {
     if (!meshRef.current) return
@@ -30,6 +32,7 @@ const Token: FC<ThreeElements['mesh']> = (props) => {
   }, [resetToken])
 
   useFrame((_, delta) => {
+    if (isGameOver || isGameWon) return
     const mesh = meshRef.current
     mesh.rotation.y += delta * 2
     mesh.position.z -= (ragPortalActive ? SPEED * 1.5 : SPEED) * delta

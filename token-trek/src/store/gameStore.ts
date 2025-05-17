@@ -1,5 +1,8 @@
 import { create } from 'zustand'
 
+/** AGI milestone – reaching this many tokens wins the game */
+export const AGI_GOAL = 8192
+
 /**
  * Global game-state store (Zustand)
  * – health / game-over logic
@@ -10,6 +13,7 @@ interface GameState {
   health: number
   maxHealth: number
   isGameOver: boolean
+  isGameWon: boolean
   reduceHealth: (amount: number) => void
   resetHealth: () => void
   shrinkMaxHealth: (amount: number) => void
@@ -33,12 +37,14 @@ export const useGameStore = create<GameState>((set, get) => ({
   health: 100,
   maxHealth: 100,
   isGameOver: false,
+  isGameWon: false,
   reduceHealth: (amount: number) =>
     set((state) => {
       const nextHealth = Math.max(state.health - amount, 0)
       return { health: nextHealth, isGameOver: nextHealth <= 0 }
     }),
-  resetHealth: () => set({ health: 100, maxHealth: 100, isGameOver: false }),
+  resetHealth: () =>
+    set({ health: 100, maxHealth: 100, isGameOver: false, isGameWon: false }),
   shrinkMaxHealth: (amount: number) =>
     set((state) => {
       const newMax = Math.max(state.maxHealth - amount, 0)
@@ -67,10 +73,14 @@ export const useGameStore = create<GameState>((set, get) => ({
   multiplier: 1,
   startTime: performance.now(),
   collectToken: () =>
-    set((state) => ({
-      tokenCount: state.tokenCount + state.multiplier,
-      multiplier: state.multiplier + 1,
-    })),
+    set((state) => {
+      const tokenCount = state.tokenCount + state.multiplier
+      return {
+        tokenCount,
+        multiplier: state.multiplier + 1,
+        isGameWon: tokenCount >= AGI_GOAL,
+      }
+    }),
   tokensPerSecond: () => {
     const elapsed = (performance.now() - get().startTime) / 1000
     return elapsed > 0 ? get().tokenCount / elapsed : 0
