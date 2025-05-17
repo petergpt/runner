@@ -57,3 +57,42 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
     - Ensure `pnpm build`, `pnpm lint`, and `pnpm test` all pass.
     - Add any necessary GitHub Actions or scripts for automated checks.
 
+## Suggested Parallelization Groups
+
+Work in each numbered group below should be merged sequentially, but different
+groups can proceed in parallel once their dependencies are satisfied.
+
+**Group A – Repository Setup**
+  - 1. Project Baseline
+  - 12. Validation & CI
+  *Establishes the initial development environment and CI pipeline. Merge this
+  group before starting others.*
+
+**Group B – Core Gameplay Foundation**
+  - 2. Initial 3D Scene
+  - 3. Procedural Track Generation
+  - 4. Player Movement
+  *These tasks create the basic scene, track, and controls. They can be worked
+  on simultaneously after Group A, with coordination around shared scene files.*
+
+**Group C – Game Content**
+  - 5. Obstacles
+  - 6. Collectibles and Scoring
+  - 7. Health and Collisions
+  *Add interactive elements and player health. Begin once the core scene and
+  movement are ready.*
+
+**Group D – Enhanced Mechanics and UI**
+  - 8. LLM‑Flavored Mechanics
+  - 9. HUD and UI
+  - 10. Visual Polish
+  *These enhancements depend on Groups B and C. Visual polish may occur
+  alongside other features as long as the scene exists.*
+
+**Group E – Endgame Logic**
+  - 11. Game Over & Win State
+  *Requires health, scoring, and UI from earlier groups.*
+
+Tasks from different groups can be assigned to separate agents to minimize pull
+request conflicts.
+
