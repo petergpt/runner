@@ -12,7 +12,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Add a camera and minimal lighting.
    - Create a placeholder player model.
 
-3. **Procedural Track Generation**
+3. **Procedural Track Generation** ✅ *Complete*
    - Implement a `trackChunkGenerator` that creates a 3‑lane endless track.
    - Write unit tests for the generator.
 
