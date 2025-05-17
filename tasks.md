@@ -16,7 +16,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Implement a `trackChunkGenerator` that creates a 3‑lane endless track.
    - Write unit tests for the generator.
 
-4. **Player Movement**
+4. **Player Movement** ✅ *Complete*
    - Implement A/D (or ←/→) lane switching.
    - Add jumping with the space bar.
    - Clamp the context window with `contextWindowClamp()` and test it.
