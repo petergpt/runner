@@ -2,7 +2,7 @@
 
 Below is a high-level breakdown of the work needed to deliver the Token Trek game described in the project README.
 
-1. **Project Baseline**
+1. **Project Baseline** ✅ *Complete*
    - Ensure `pnpm install` sets up all dependencies.
    - Enable TypeScript strict mode and configure ESLint + Prettier.
    - Verify the base Vite + React + TypeScript scaffold builds and lints.
@@ -53,45 +53,53 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
     - Trigger win condition upon reaching an AGI milestone.
     - Show game over screen when the player loses all health.
 
-12. **Validation & CI**
+12. **Validation & CI** ✅ *Complete*
     - Ensure `pnpm build`, `pnpm lint`, and `pnpm test` all pass.
     - Add any necessary GitHub Actions or scripts for automated checks.
 
 ## Suggested Parallelization Groups
 
-Work in each numbered group below should be merged sequentially, but different
-groups can proceed in parallel once their dependencies are satisfied.
+Tasks marked **✅ Complete** are finished. The remaining work can be assigned in
+the groups below. Within each group, tasks should merge sequentially to avoid
+conflicts, but different groups may proceed in parallel once their dependencies
+are met.
 
-**Group A – Repository Setup**
-  - 1. Project Baseline
-  - 12. Validation & CI
-  *Establishes the initial development environment and CI pipeline. Merge this
-  group before starting others.*
+**Completed Setup**
+  - 1. Project Baseline ✅
+  - 12. Validation & CI ✅
+  *The repository and CI pipeline are ready for feature development.*
 
-**Group B – Core Gameplay Foundation**
+**Group 1 – Scene Foundation**
   - 2. Initial 3D Scene
   - 3. Procedural Track Generation
-  - 4. Player Movement
-  *These tasks create the basic scene, track, and controls. They can be worked
-  on simultaneously after Group A, with coordination around shared scene files.*
+  *Implement the basic scene first, then add track generation. Subsequent groups
+  depend on this foundation.*
 
-**Group C – Game Content**
+**Group 2 – Player Controls**
+  - 4. Player Movement
+  *Requires the scene and track. Once merged, Groups 3 and 5 can run in parallel.*
+
+**Group 3 – Obstacles and Scoring**
   - 5. Obstacles
   - 6. Collectibles and Scoring
   - 7. Health and Collisions
-  *Add interactive elements and player health. Begin once the core scene and
-  movement are ready.*
+  *These features share game state. Work on them sequentially or with close
+  coordination after Group 2.*
 
-**Group D – Enhanced Mechanics and UI**
+**Group 4 – Advanced Mechanics**
   - 8. LLM‑Flavored Mechanics
-  - 9. HUD and UI
-  - 10. Visual Polish
-  *These enhancements depend on Groups B and C. Visual polish may occur
-  alongside other features as long as the scene exists.*
+  *Starts after Group 3. Can be developed alongside Group 6.*
 
-**Group E – Endgame Logic**
+**Group 5 – Visual Polish**
+  - 10. Visual Polish
+  *Mostly affects shaders and post‑processing. Can begin once the basic scene is
+  in place (after Group 1).*
+
+**Group 6 – UI and Endgame**
+  - 9. HUD and UI
   - 11. Game Over & Win State
-  *Requires health, scoring, and UI from earlier groups.*
+  *Depends on scoring and health from Group 3. Can proceed in parallel with
+  Group 4 and merge once both are complete.*
 
 Tasks from different groups can be assigned to separate agents to minimize pull
 request conflicts.
