@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# ============================================================================
+# Token Trek — Codex setup script (network-on bootstrap)
+# ============================================================================
+
+set -euo pipefail
+
+##############################################################################
+# 1 ▸ Pin & activate the tool-chain
+##############################################################################
+export CODEX_ENV_NODE_VERSION=20          # Node 20 from codex-universal
+corepack enable
+corepack prepare pnpm@latest --activate   # pin pnpm
+
+##############################################################################
+# 2 ▸ Scaffold project (non-interactive)
+##############################################################################
+if [ ! -d "token-trek" ]; then
+  # grab Vite’s react-ts starter without the wizard
+  pnpm dlx degit \
+    "github:vitejs/vite/packages/create-vite/template-react-ts" \
+    token-trek
+fi
+cd token-trek
+
+##############################################################################
+# 3 ▸ Runtime dependencies
+##############################################################################
+pnpm add three @react-three/fiber @react-three/drei zustand stats.js
+
+##############################################################################
+# 4 ▸ Dev / tooling dependencies
+##############################################################################
+pnpm add -D vite vitest @vitest/coverage-v8 \
+  eslint prettier \
+  @typescript-eslint/parser @typescript-eslint/eslint-plugin \
+  eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier \
+  tailwindcss postcss autoprefixer @tailwindcss/cli
+
+##############################################################################
+# 5 ▸ Tailwind defaults (safe when files already exist)
+##############################################################################
+pnpm exec tailwindcss init -p || true     # uses @tailwindcss/cli binary
+
+##############################################################################
+# 6 ▸ Prime the build & tests while network is available
+##############################################################################
+pnpm run build                            # vite build
+pnpm exec vitest --run --passWithNoTests  # exits 0 even if no tests yet
