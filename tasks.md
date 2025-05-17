@@ -44,7 +44,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Real‑time HUD showing health, token count, and tokens‑per‑second.
    - Use CSS Modules or Tailwind for styling.
 
-10. **Visual Polish**
+10. **Visual Polish** ✅ *Complete*
     - Neon data‑lattice floor/grid shader.
     - Bloom or glitch post‑processing with `EffectComposer`.
     - Maintain 60 FPS on typical laptop GPUs.
