@@ -40,7 +40,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
      - System Prompt – clear red cubes for 3 s.
      - RAG Portal – teleport to a bonus token lane.
 
-9. **HUD and UI**
+9. **HUD and UI** ✅ *Complete*
    - Real‑time HUD showing health, token count, and tokens‑per‑second.
    - Use CSS Modules or Tailwind for styling.
 
