@@ -30,7 +30,7 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Useful Token pickups that extend a score multiplier.
    - Display token count and tokens‑per‑second.
 
-7. **Health and Collisions**
+7. **Health and Collisions** ✅ *Complete*
    - Implement context‑integrity (health) reduction on collisions.
    - End the run when health reaches zero.
 
@@ -82,7 +82,7 @@ are met.
 **Group 3 – Obstacles and Scoring**
   - 5. Obstacles
   - 6. Collectibles and Scoring
-  - 7. Health and Collisions
+  - 7. Health and Collisions ✅
   *These features share game state. Work on them sequentially or with close
   coordination after Group 2.*
 
