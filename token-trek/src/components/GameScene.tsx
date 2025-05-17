@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, Stats } from '@react-three/drei'
 import type { Mesh } from 'three'
 
 import Player from './Player'
@@ -9,6 +9,8 @@ import Token from './Token'
 import Obstacle from './Obstacle'
 import SystemPromptPowerUp from './SystemPromptPowerUp'
 import RAGPortal from './RAGPortal'
+import NeonGrid from './NeonGrid'
+import VisualEffects from './VisualEffects'
 import {
   PromptInjectionCube,
   RateLimitGate,
@@ -41,6 +43,7 @@ const GameScene: FC = () => {
         {/* Lights */}
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
+        <NeonGrid />
 
         {/* Player passes array of refs for collision checks */}
         <Player position={[0, 0.5, 0]} obstacles={[
@@ -61,6 +64,9 @@ const GameScene: FC = () => {
         <RateLimitGate        ref={gateRef}  position={[0, 0,   -8]} />
         <SequenceLengthWall   ref={wallRef}  position={[0, 1,  -12]} />
 
+        {/* Visuals */}
+        <VisualEffects />
+        <Stats />
         {/* Controls */}
         <OrbitControls />
       </Canvas>
