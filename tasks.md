@@ -107,7 +107,7 @@ request conflicts.
 
 ## Additional Tasks
 
-13. **Endless Track Integration**
+13. **Endless Track Integration** ✅ *Complete*
     - Use `trackChunkGenerator` inside `GameScene` to create a scrolling track.
     - Recycle chunks as they move behind the player to save memory.
 
