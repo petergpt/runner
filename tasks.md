@@ -21,12 +21,12 @@ Below is a high-level breakdown of the work needed to deliver the Token Trek gam
    - Add jumping with the space bar.
    - Clamp the context window with `contextWindowClamp()` and test it.
 
-5. **Obstacles**
+5. **Obstacles** ✅ *Complete*
    - Prompt‑Injection Cubes that spin and damage the player.
    - Rate‑Limit Gates that close across a lane.
    - Sequence‑Length Walls appearing after ~30 s that require jumping.
 
-6. **Collectibles and Scoring**
+6. **Collectibles and Scoring** ✅ *Complete*
    - Useful Token pickups that extend a score multiplier.
    - Display token count and tokens‑per‑second.
 
@@ -80,7 +80,7 @@ are met.
   *Requires the scene and track. Once merged, Groups 3 and 5 can run in parallel.*
 
 **Group 3 – Obstacles and Scoring**
-  - 5. Obstacles
+  - 5. Obstacles ✅
   - 6. Collectibles and Scoring
   - 7. Health and Collisions ✅
   *These features share game state. Work on them sequentially or with close
