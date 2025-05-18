@@ -16,7 +16,6 @@ const RAGPortal: FC<MeshProps> = ({ id: _discard, ...props }) => {
   void _discard
   const meshRef = useRef<Mesh>(null!)
   const lane = usePlayerStore((s) => s.lane)
-  const setLane = usePlayerStore((s) => s.setLane)
   const activate = useGameStore((s) => s.activateRagPortal)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
@@ -48,7 +47,6 @@ const RAGPortal: FC<MeshProps> = ({ id: _discard, ...props }) => {
       Math.abs(mesh.position.x - lanes[lane]) < 0.1
     ) {
       activate()
-      setLane(1)
       reset()
     }
   })

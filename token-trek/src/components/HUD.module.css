@@ -33,6 +33,20 @@
   animation: flash-cyan 0.2s;
 }
 
+.powerMsg {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  text-shadow: 0 0 5px #fff;
+}
+
+.system {
+  color: yellow;
+}
+
+.bonus {
+  color: lightblue;
+}
+
 @keyframes flash-red {
   from { background-color: rgba(255, 0, 0, 0.3); }
   to   { background-color: transparent; }

@@ -86,6 +86,22 @@ const Player: FC<PlayerProps> = ({
     return () => clearTimeout(id)
   }, [lastToken])
 
+  /* Visual feedback on damage */
+  useEffect(() => {
+    if (!materialRef.current || !lastDamage) return
+    materialRef.current.color.set('red')
+    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
+    return () => clearTimeout(id)
+  }, [lastDamage])
+
+  /* Visual feedback on token */
+  useEffect(() => {
+    if (!materialRef.current || !lastToken) return
+    materialRef.current.color.set('cyan')
+    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
+    return () => clearTimeout(id)
+  }, [lastToken])
+
   /* Per-frame logic */
   useFrame((_, dt) => {
     if (isGameOver || isGameWon) return

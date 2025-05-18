@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { trackChunkGenerator, type TrackChunk } from '../game/trackChunkGenerator'
+import { trackChunkGenerator } from '../game/trackChunkGenerator'
 
 interface Position {
   x: number
@@ -11,23 +11,22 @@ interface TrackState {
 }
 
 export const useTrackStore = create<TrackState>(() => {
-  const gen: Generator<TrackChunk> = trackChunkGenerator()
-  const SPAWN_LIMIT = 100
+  const lanes = trackChunkGenerator().next().value.lanes
+  let cursor = -20
+  const STEP = 8
+  const LIMIT = -100
   return {
     /**
-     * Returns a lane-aligned position some distance ahead of the
-     * player. Objects spawned using this helper stay within
-     * {@link SPAWN_LIMIT} units in front of the camera so they
-     * appear regularly instead of thousands of units away.
+     * Spawn positions march forward along the Z axis so objects appear in a
+     * consistent rhythm rather than jumping randomly. Once the cursor passes
+     * {@link LIMIT}, it wraps back near the player to avoid huge values.
      */
     nextPosition: (lane?: number) => {
-      const chunk = gen.next().value
-      const laneIndex = lane ?? Math.floor(Math.random() * chunk.lanes.length)
-      const x = chunk.lanes[laneIndex]
-      const z = -(
-        (chunk.startZ % SPAWN_LIMIT) + Math.random() * chunk.length
-      )
-      return { x, z }
+      const laneIndex = lane ?? Math.floor(Math.random() * lanes.length)
+      const pos = { x: lanes[laneIndex], z: cursor }
+      cursor -= STEP + Math.random() * 4
+      if (cursor < LIMIT) cursor = -20
+      return pos
     },
   }
 })
