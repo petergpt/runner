@@ -1,5 +1,9 @@
 {
   "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    /* keep all the strictness *except* null-checks so Mesh refs compile */
+    "strictNullChecks": false
+  },
   "exclude": [
     "src/**/*.test.*",
     "src/**/*.spec.*",

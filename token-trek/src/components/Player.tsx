@@ -1,4 +1,4 @@
-import type { FC, RefObject } from 'react'
+import type { FC, RefObject, MutableRefObject } from 'react'
 import { useEffect, useRef } from 'react'
 import type { ThreeElements } from '@react-three/fiber'
 import { useFrame } from '@react-three/fiber'
@@ -18,14 +18,26 @@ const FLOOR_Y       = 0.5
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
 type PlayerProps = MeshProps & {
   obstacles?: RefObject<Mesh>[]
+  /**
+   * External set tracking which obstacles have already triggered a collision.
+   * Passed in from the scene so obstacles can reset this state when they
+   * recycle.
+   */
+  collidedRef?: MutableRefObject<Set<Mesh>>
 }
 
-const Player: FC<PlayerProps> = ({ id: _discard, obstacles = [], ...props }) => {
+const Player: FC<PlayerProps> = ({
+  id: _discard,
+  obstacles = [],
+  collidedRef,
+  ...props
+}) => {
   void _discard
-  const meshRef        = useRef<Mesh>(null!)
-  const velocityY      = useRef(0)
-  const jumping        = useRef(false)
-  const collided       = useRef<Set<Mesh>>(new Set())
+  const meshRef   = useRef<Mesh>(null!)
+  const velocityY = useRef(0)
+  const jumping   = useRef(false)
+  const internalCollided = useRef<Set<Mesh>>(new Set())
+  const collided = collidedRef ?? internalCollided
 
   /* Boxes reused each frame to avoid GC churn */
   const playerBox   = useRef<Box3>(new ThreeBox3())

@@ -6,7 +6,12 @@ import { useTrackStore } from '../store/trackStore'
 import { useGameStore } from '../store/gameStore'
 
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
-const Obstacle = forwardRef<Mesh, MeshProps>(({ id: _discard, ...props }, ref) => {
+interface Props extends MeshProps {
+  /** called when the obstacle respawns ahead of the player */
+  onReset?: (mesh: Mesh) => void
+}
+
+const Obstacle = forwardRef<Mesh, Props>(({ id: _discard, onReset, ...props }, ref) => {
   void _discard
   const meshRef = useRef<Mesh>(null!)
   const nextPosition = useTrackStore((s) => s.nextPosition)
@@ -17,7 +22,8 @@ const Obstacle = forwardRef<Mesh, MeshProps>(({ id: _discard, ...props }, ref) =
   const reset = useCallback(() => {
     const { x, z } = nextPosition()
     meshRef.current.position.set(x, 0.5, z)
-  }, [nextPosition])
+    if (onReset) onReset(meshRef.current)
+  }, [nextPosition, onReset])
 
   useEffect(() => {
     reset()
