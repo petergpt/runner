@@ -135,7 +135,7 @@ const SceneContent: FC = () => {
       {/* Obstacles */}
       {Array.from({ length: GENERIC_COUNT }).map((_, i) => (
         <Obstacle
-          key={`o${i}`]
+          key={`o${i}`}
           ref={genericRefs.current[i]}
           position={[0, 0.5, -50]}
         />
