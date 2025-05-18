@@ -34,7 +34,7 @@ const StartMenu: FC<Props> = ({ onStart }) => {
         <span style={{ color: 'yellow' }}>Yellow icosahedrons</span> clear
         obstacles briefly. The blue portal leads to a bonus lane.
         <br />
-        Watch for on-screen messages when power‑ups activate.
+        Watch for on‑screen messages when power‑ups activate.
       </div>
     </div>
   );

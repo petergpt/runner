@@ -58,9 +58,9 @@ const Player: FC<PlayerProps> = ({
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.code === 'KeyA' || e.code === 'ArrowLeft')
-        setLane(contextWindowClamp(lane - 1))
+        setLane((l) => contextWindowClamp(l - 1))
       else if (e.code === 'KeyD' || e.code === 'ArrowRight')
-        setLane(contextWindowClamp(lane + 1))
+        setLane((l) => contextWindowClamp(l + 1))
       else if (e.code === 'Space' && !jumping.current) {
         jumping.current  = true
         velocityY.current = JUMP_VELOCITY
@@ -68,7 +68,23 @@ const Player: FC<PlayerProps> = ({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [lane, setLane])
+  }, [setLane])
+
+  /* Visual feedback on damage */
+  useEffect(() => {
+    if (!materialRef.current || !lastDamage) return
+    materialRef.current.color.set('red')
+    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
+    return () => clearTimeout(id)
+  }, [lastDamage])
+
+  /* Visual feedback on token */
+  useEffect(() => {
+    if (!materialRef.current || !lastToken) return
+    materialRef.current.color.set('cyan')
+    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
+    return () => clearTimeout(id)
+  }, [lastToken])
 
   /* Visual feedback on damage */
   useEffect(() => {
