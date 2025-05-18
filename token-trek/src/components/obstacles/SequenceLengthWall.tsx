@@ -25,6 +25,7 @@ const SequenceLengthWall: FC<Props> = ({ appearAfter = 30, ...props }) => {
   const startTime = useRef<number>(0)
 
   const reset = useCallback((clockTime: number) => {
+    if (!meshRef.current) return
     const { x, z } = nextPosition()
     meshRef.current.position.set(x, 1, z)
     meshRef.current.visible = false
@@ -37,10 +38,12 @@ const SequenceLengthWall: FC<Props> = ({ appearAfter = 30, ...props }) => {
 
   useFrame(({ clock }, dt) => {
     if (isGameOver || isGameWon) return
+    const mesh = meshRef.current
+    if (!mesh) return
     const elapsed = clock.getElapsedTime() - startTime.current
-    if (elapsed >= appearAfter) meshRef.current.visible = true
-    meshRef.current.position.z -= SPEED * dt
-    if (meshRef.current.position.z < -5) reset(clock.getElapsedTime())
+    if (elapsed >= appearAfter) mesh.visible = true
+    mesh.position.z -= SPEED * dt
+    if (mesh.position.z < -5) reset(clock.getElapsedTime())
   })
 
   return (

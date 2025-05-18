@@ -20,6 +20,7 @@ const PromptInjectionCube: FC<ThreeElements['mesh']> = (props) => {
   const nextPosition = useTrackStore((s) => s.nextPosition)
 
   const reset = useCallback(() => {
+    if (!meshRef.current) return
     const { x, z } = nextPosition()
     meshRef.current.position.set(x, 0.5, z)
   }, [nextPosition])
@@ -34,10 +35,12 @@ const PromptInjectionCube: FC<ThreeElements['mesh']> = (props) => {
 
   useFrame((_, delta) => {
     if (isGameOver || isGameWon) return
-    meshRef.current.rotation.x += delta
-    meshRef.current.rotation.y += delta
-    meshRef.current.position.z -= SPEED * delta
-    if (meshRef.current.position.z < -5) reset()
+    const mesh = meshRef.current
+    if (!mesh) return
+    mesh.rotation.x += delta
+    mesh.rotation.y += delta
+    mesh.position.z -= SPEED * delta
+    if (mesh.position.z < -5) reset()
   })
 
   return (
