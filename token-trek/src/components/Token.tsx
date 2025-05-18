@@ -8,7 +8,6 @@ import { useGameStore } from '../store/gameStore'
 import { useTrackStore } from '../store/trackStore'
 
 const LANE_WIDTH = 2
-const SPEED = 5
 const lanes = [-LANE_WIDTH, 0, LANE_WIDTH]
 const BONUS_OFFSET = 4
 
@@ -21,6 +20,7 @@ const Token: FC<MeshProps> = ({ id: _discard, ...props }) => {
   const ragPortalActive = useGameStore((s) => s.ragPortalActive)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const trackSpeed = useGameStore((s) => s.trackSpeed)
   const nextPosition = useTrackStore((s) => s.nextPosition)
 
   const resetToken = useCallback(() => {
@@ -38,7 +38,8 @@ const Token: FC<MeshProps> = ({ id: _discard, ...props }) => {
     if (isGameOver || isGameWon) return
     const mesh = meshRef.current
     mesh.rotation.y += delta * 2
-    mesh.position.z += (ragPortalActive ? SPEED * 1.5 : SPEED) * delta
+    const speed = trackSpeed * (ragPortalActive ? 1.5 : 1)
+    mesh.position.z += speed * delta
     if (mesh.position.z > 5) {
       resetToken()
       return

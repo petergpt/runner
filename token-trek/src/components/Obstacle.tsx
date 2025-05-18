@@ -5,8 +5,6 @@ import { useFrame } from '@react-three/fiber'
 import { useTrackStore } from '../store/trackStore'
 import { useGameStore } from '../store/gameStore'
 
-const SPEED = 5
-
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
 const Obstacle = forwardRef<Mesh, MeshProps>(({ id: _discard, ...props }, ref) => {
   void _discard
@@ -14,6 +12,7 @@ const Obstacle = forwardRef<Mesh, MeshProps>(({ id: _discard, ...props }, ref) =
   const nextPosition = useTrackStore((s) => s.nextPosition)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const trackSpeed = useGameStore((s) => s.trackSpeed)
 
   const reset = useCallback(() => {
     const { x, z } = nextPosition()
@@ -26,7 +25,7 @@ const Obstacle = forwardRef<Mesh, MeshProps>(({ id: _discard, ...props }, ref) =
 
   useFrame((_, dt) => {
     if (isGameOver || isGameWon) return
-    meshRef.current.position.z += SPEED * dt
+    meshRef.current.position.z += trackSpeed * dt
     if (meshRef.current.position.z > 5) reset()
   })
 

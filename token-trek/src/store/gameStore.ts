@@ -30,6 +30,10 @@ interface GameState {
   collectToken: () => void
   tokensPerSecond: () => number
 
+  /* Track progression */
+  trackSpeed: number
+  increaseTrackSpeed: (amount: number) => void
+
   /* Meta */
   highScore: number
   resetGame: () => void
@@ -114,6 +118,10 @@ export const useGameStore = create<GameState>((set, get) => ({
     return elapsed > 0 ? get().tokenCount / elapsed : 0
   },
 
+  trackSpeed: 10,
+  increaseTrackSpeed: (amount) =>
+    set((state) => ({ trackSpeed: state.trackSpeed + amount })),
+
   /* ── meta & reset ───────────────────────────────────────────────── */
   highScore:
     typeof window === 'undefined'
@@ -138,6 +146,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         tokenCount: 0,
         multiplier: 1,
         startTime: performance.now(),
+        trackSpeed: 10,
         highScore,
       }
     })

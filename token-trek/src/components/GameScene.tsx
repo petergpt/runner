@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, createRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Stats } from '@react-three/drei'
 import type { Mesh, Group } from 'three'
@@ -24,10 +24,13 @@ import {
 import { useGameStore } from '../store/gameStore'
 
 const SceneContent: FC = () => {
-  /* refs let Player poll obstacle positions for collision */
-  const genericObstacleRef = useRef<Mesh>(null!)
-  const injCubeRef = useRef<Mesh>(null!)
-  const gateRef = useRef<Mesh>(null!)
+  /* obstacle references for collision */
+  const GENERIC_COUNT = 6
+  const CUBE_COUNT = 4
+  const GATE_COUNT = 3
+  const genericRefs = useRef([...Array(GENERIC_COUNT)].map(() => createRef<Mesh>()))
+  const cubeRefs = useRef([...Array(CUBE_COUNT)].map(() => createRef<Mesh>()))
+  const gateRefs = useRef([...Array(GATE_COUNT)].map(() => createRef<Mesh>()))
   const wallRef = useRef<Mesh>(null!)
 
   /* procedural track */
@@ -48,6 +51,8 @@ const SceneContent: FC = () => {
   const isGameWon = useGameStore((s) => s.isGameWon)
   const shrinkMaxHealth = useGameStore((s) => s.shrinkMaxHealth)
   const clearPowerUpTimers = useGameStore((s) => s.clearPowerUpTimers)
+  const trackSpeed = useGameStore((s) => s.trackSpeed)
+  const increaseTrackSpeed = useGameStore((s) => s.increaseTrackSpeed)
   const checkpointRef = useRef(0)
 
   /* clear timers on unmount */
@@ -57,16 +62,17 @@ const SceneContent: FC = () => {
   useFrame(({ clock }, dt) => {
     if (isGameOver || isGameWon) return
 
-    /* 15-s summarization checkpoint */
+    /* 10-s summarization checkpoint */
     const elapsed = clock.getElapsedTime()
-    if (elapsed - checkpointRef.current >= 15) {
+    if (elapsed - checkpointRef.current >= 10) {
       shrinkMaxHealth(10)
+      increaseTrackSpeed(1)
       checkpointRef.current = elapsed
     }
 
     /* scroll chunks towards player */
     chunkRefs.current.forEach((g) => {
-      if (g) g.position.z += 5 * dt
+      if (g) g.position.z += trackSpeed * dt
     })
 
     /* recycle first chunk when it’s far behind */
@@ -111,19 +117,44 @@ const SceneContent: FC = () => {
       {/* Player */}
       <Player
         position={[0, 0.5, 0]}
-        obstacles={[genericObstacleRef, injCubeRef, gateRef, wallRef]}
+        obstacles={[
+          ...genericRefs.current,
+          ...cubeRefs.current,
+          ...gateRefs.current,
+          wallRef,
+        ]}
       />
 
       {/* Collectibles & power-ups */}
-      <Token position={[0, 0.5, -3]} />
-      <SystemPromptPowerUp position={[0, 0.5, -6]} />
-      <RAGPortal position={[0, 0.5, -9]} />
+      {Array.from({ length: 15 }).map((_, i) => (
+        <Token key={`t${i}`} position={[0, 0.5, -50]} />
+      ))}
+      <SystemPromptPowerUp position={[0, 0.5, -50]} />
+      <RAGPortal position={[0, 0.5, -50]} />
 
       {/* Obstacles */}
-      <Obstacle ref={genericObstacleRef} position={[0, 0.5, -2]} />
-      <PromptInjectionCube ref={injCubeRef} position={[0, 0.5, -5]} />
-      <RateLimitGate ref={gateRef} position={[0, 0, -8]} />
-      <SequenceLengthWall ref={wallRef} position={[0, 1, -12]} />
+      {Array.from({ length: GENERIC_COUNT }).map((_, i) => (
+        <Obstacle
+          key={`o${i}`}
+          ref={genericRefs.current[i]}
+          position={[0, 0.5, -50]}
+        />
+      ))}
+      {Array.from({ length: CUBE_COUNT }).map((_, i) => (
+        <PromptInjectionCube
+          key={`c${i}`}
+          ref={cubeRefs.current[i]}
+          position={[0, 0.5, -50]}
+        />
+      ))}
+      {Array.from({ length: GATE_COUNT }).map((_, i) => (
+        <RateLimitGate
+          key={`g${i}`}
+          ref={gateRefs.current[i]}
+          position={[0, 0, -50]}
+        />
+      ))}
+      <SequenceLengthWall ref={wallRef} position={[0, 1, -50]} appearAfter={15} />
 
       {/* Effects & HUD */}
       <VisualEffects />
