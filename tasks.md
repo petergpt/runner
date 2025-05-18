@@ -131,6 +131,6 @@ request conflicts.
     - Provide placeholders for sound effects on token collect, collisions and power-ups.
     - Document where users can drop custom audio files.
 
-19. **Cleanup & Error Handling**
+19. **Cleanup & Error Handling** ✅ *Complete*
     - Clear any `setTimeout` timers when components unmount.
     - Add React error boundaries around the game scene to surface issues.

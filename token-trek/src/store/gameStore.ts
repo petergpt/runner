@@ -21,8 +21,11 @@ interface GameState {
   /* Power-up state */
   systemPromptActive: boolean
   activateSystemPrompt: () => void
+  systemPromptTimeoutId?: ReturnType<typeof setTimeout>
   ragPortalActive: boolean
   activateRagPortal: () => void
+  ragPortalTimeoutId?: ReturnType<typeof setTimeout>
+  clearPowerUpTimers: () => void
 
   /* Token / score system */
   tokenCount: number
@@ -64,12 +67,35 @@ export const useGameStore = create<GameState>((set, get) => ({
   systemPromptActive: false,
   activateSystemPrompt: () => {
     set({ systemPromptActive: true })
-    setTimeout(() => set({ systemPromptActive: false }), 3000)
+    const id = setTimeout(() => {
+      set({ systemPromptActive: false, systemPromptTimeoutId: undefined })
+    }, 3000)
+    set({ systemPromptTimeoutId: id })
   },
+  systemPromptTimeoutId: undefined,
   ragPortalActive: false,
   activateRagPortal: () => {
     set({ ragPortalActive: true })
-    setTimeout(() => set({ ragPortalActive: false }), 3000)
+    const id = setTimeout(() => {
+      set({ ragPortalActive: false, ragPortalTimeoutId: undefined })
+    }, 3000)
+    set({ ragPortalTimeoutId: id })
+  },
+  ragPortalTimeoutId: undefined,
+  clearPowerUpTimers: () => {
+    const { systemPromptTimeoutId, ragPortalTimeoutId } = get()
+    if (systemPromptTimeoutId) {
+      clearTimeout(systemPromptTimeoutId)
+    }
+    if (ragPortalTimeoutId) {
+      clearTimeout(ragPortalTimeoutId)
+    }
+    set({
+      systemPromptTimeoutId: undefined,
+      ragPortalTimeoutId: undefined,
+      systemPromptActive: false,
+      ragPortalActive: false,
+    })
   },
 
   /* ── token / scoring subsystem ─────────────────────────────────────── */
@@ -95,7 +121,8 @@ export const useGameStore = create<GameState>((set, get) => ({
     typeof window === 'undefined'
       ? 0
       : Number(window.localStorage.getItem('highScore')) || 0,
-  resetGame: () =>
+  resetGame: () => {
+    get().clearPowerUpTimers()
     set((state) => {
       const highScore =
         state.tokenCount > state.highScore ? state.tokenCount : state.highScore
@@ -113,5 +140,6 @@ export const useGameStore = create<GameState>((set, get) => ({
         startTime: performance.now(),
         highScore,
       }
-    }),
+    })
+  },
 }))
