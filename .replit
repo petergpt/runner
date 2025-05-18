@@ -1,0 +1,25 @@
+modules = ["nodejs-20", "bash", "web"]
+run = 'bash -c "cd token-trek \   && pnpm install --frozen-lockfile \   && pnpm run dev -- --host 0.0.0.0 --port $PORT"'
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "cd token-trek && pnpm install --frozen-lockfile && NODE_ENV=production pnpm run preview --host 0.0.0.0 --port 5173"]
+build = ["sh", "-c", "cd token-trek && pnpm install --frozen-lockfile && pnpm run build"]
+
+[workflows]
+runButton = "Run"
+
+[[workflows.workflow]]
+name = "Run"
+author = 17743746
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd token-trek && NODE_ENV=development pnpm install --frozen-lockfile && pnpm run dev --host 0.0.0.0 --port 5173"
+
+[[ports]]
+localPort = 5173
+externalPort = 80

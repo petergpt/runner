@@ -1,0 +1,37 @@
+[vite] connecting...
+[vite] connected.
+Cannot assign to read only property 'id' of object '#'
+at applyProps (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:12669:17)
+at handleContainerEffects (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13364:3)
+at appendChild (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13397:3)
+at appendChildToContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13524:5)
+at insertOrAppendPlacementNodeIntoContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7257:91)
+at insertOrAppendPlacementNodeIntoContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7259:16)
+at insertOrAppendPlacementNodeIntoContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7259:16)
+at insertOrAppendPlacementNodeIntoContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7260:13)
+at insertOrAppendPlacementNodeIntoContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7259:16)
+at insertOrAppendPlacementNodeIntoContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7259:16)
+Cannot convert undefined or null to object
+at removeChild (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13436:16)
+at removeChild (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13433:5)
+at removeChild (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13433:5)
+at removeChildFromContainer (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13529:5)
+at runWithFiberInDEV (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:918:18)
+at commitDeletionEffectsOnFiber (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7594:21)
+at recursivelyTraverseDeletionEffects (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7540:11)
+at commitDeletionEffectsOnFiber (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7664:13)
+at recursivelyTraverseDeletionEffects (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7540:11)
+at commitDeletionEffectsOnFiber (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:7700:13)
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object
+Cannot convert undefined or null to object

@@ -1,0 +1,26 @@
+[vite] connecting...
+[vite] connected.
+<div class="luna-console-preview" data-id="32"><div class="luna-console-preview-container"><div class="luna-console-preview-icon-container"><span class="luna-console-icon luna-console-icon-caret-right"></span></div><span class="luna-console-preview-content-container"><span class="luna-console-descriptor">Error</span> <span class="luna-console-object-preview">{}</span></span></div><div class="luna-console-json luna-console-hidden"></div></div>
+
+The above error occurred in the <GameScene> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+
+The above error occurred in the &lt;GameScene&gt; component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+at t.value (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Game error: 
+Error {}
+ 
+Object {componentStack: "↵    at GameScene…"}
+
+at t.value (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

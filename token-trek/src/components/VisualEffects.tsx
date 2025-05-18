@@ -1,3 +1,4 @@
+
 import type { FC } from 'react'
 import { useEffect, useRef } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
@@ -10,19 +11,36 @@ const VisualEffects: FC = () => {
   const { scene, camera, gl, size } = useThree()
 
   useEffect(() => {
-    const pass = new RenderPass(scene, camera)
-    const glitch = new GlitchPass()
-    composer.current = new EffectComposer(gl)
-    composer.current.addPass(pass)
-    composer.current.addPass(glitch)
+    try {
+      if (!gl.capabilities.isWebGL2) {
+        console.warn('WebGL 2 not available, skipping visual effects')
+        return
+      }
+
+      const pass = new RenderPass(scene, camera)
+      const glitch = new GlitchPass()
+      composer.current = new EffectComposer(gl)
+      composer.current.addPass(pass)
+      composer.current.addPass(glitch)
+    } catch (err) {
+      console.warn('Failed to initialize visual effects:', err)
+    }
   }, [scene, camera, gl])
 
   useEffect(() => {
-    composer.current?.setSize(size.width, size.height)
+    try {
+      composer.current?.setSize(size.width, size.height)
+    } catch (err) {
+      console.warn('Failed to resize effects:', err)
+    }
   }, [size])
 
   useFrame(() => {
-    composer.current?.render()
+    try {
+      composer.current?.render()
+    } catch (err) {
+      console.warn('Failed to render effects:', err)
+    }
   }, 1)
 
   return null

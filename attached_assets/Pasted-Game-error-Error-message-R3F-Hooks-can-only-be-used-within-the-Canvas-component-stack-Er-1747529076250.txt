@@ -1,0 +1,51 @@
+Game error: 
+Error {}
+message: "R3F: Hooks can only be used within the Canvas component!"
+stack: "Error: R3F: Hooks can only be used within the Canvas component!↵ at useStore (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13238:21)↵ at useFrame (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-L7B4ZONJ.js?v=8ee76d7a:13245:17)↵ at GameScene (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/src/components/GameScene.tsx:63:3)↵ at react-stack-bottom-frame (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-TPGJRR7W.js?v=8ee76d7a:17424:20)↵ at renderWithHooks (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-TPGJRR7W.js?v=8ee76d7a:4206:24)↵ at updateFunctionComponent (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-TPGJRR7W.js?v=8ee76d7a:6619:21)↵ at beginWork (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-TPGJRR7W.js?v=8ee76d7a:7654:20)↵ at runWithFiberInDEV (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-TPGJRR7W.js?v=8ee76d7a:1485:72)↵ at performUnitOfWork (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-TPGJRR7W.js?v=8ee76d7a:10868:98)↵ at workLoopSync (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/node_modules/.vite/deps/chunk-TPGJRR7W.js?v=8ee76d7a:10728:43)"
+get stack: ƒ ()
+length: 0
+name: ""
+[[Prototype]]: ƒ ()
+set stack: ƒ ()
+length: 1
+name: ""
+[[Prototype]]: ƒ ()
+apply: ƒ apply()
+arguments: "'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them"
+get arguments: ƒ ()
+set arguments: ƒ ()
+bind: ƒ bind()
+call: ƒ call()
+caller: "'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them"
+get caller: ƒ ()
+set caller: ƒ ()
+constructor: ƒ Function()
+length: 1
+name: ""
+toString: ƒ toString()
+Symbol(Symbol.hasInstance): undefined
+[[Prototype]]: Object
+[[Prototype]]: Object
+constructor: ƒ Error()
+message: "R3F: Hooks can only be used within the Canvas component!"
+name: "Error"
+toString: ƒ toString()
+[[Prototype]]: Object
+ 
+Object {componentStack: "↵    at GameScene…"}
+componentStack: "↵ at GameScene (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/src/components/GameScene.tsx:40:30)↵ at ErrorBoundary (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/src/components/ErrorBoundary.tsx:5:1)↵ at App (https://6f697112-98cc-49cd-9dee-a0a93aa2b124-00-318j0i8ug37p.kirk.replit.dev/src/App.tsx:28:33)"
+[[Prototype]]: Object
+constructor: ƒ Object()
+hasOwnProperty: ƒ hasOwnProperty()
+isPrototypeOf: ƒ isPrototypeOf()
+propertyIsEnumerable: ƒ propertyIsEnumerable()
+toLocaleString: ƒ toLocaleString()
+toString: ƒ toString()
+valueOf: ƒ valueOf()
+__defineGetter__: ƒ __defineGetter__()
+__defineSetter__: ƒ __defineSetter__()
+__lookupGetter__: ƒ __lookupGetter__()
+__lookupSetter__: ƒ __lookupSetter__()
+__proto__: Object
+get __proto__: ƒ get __proto__()
+set __proto__: ƒ set __proto__()
