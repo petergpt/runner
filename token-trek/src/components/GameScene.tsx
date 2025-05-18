@@ -30,63 +30,69 @@ const SceneContent: FC = () => {
   const gateRef = useRef<Mesh>(null!)
   const wallRef = useRef<Mesh>(null!)
 
+  /* procedural track */
   const chunkGen = useRef(trackChunkGenerator())
   const CHUNK_COUNT = 6
   const [chunks, setChunks] = useState<ChunkData[]>(() => {
     const arr: ChunkData[] = []
-    for (let i = 0; i < CHUNK_COUNT; i++)
-      arr.push(chunkGen.current.next().value)
+    for (let i = 0; i < CHUNK_COUNT; i++) arr.push(chunkGen.current.next().value)
     return arr
   })
   const chunkRefs = useRef<(Group | null)[]>([])
 
+  /* game state */
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
   const shrinkMaxHealth = useGameStore((s) => s.shrinkMaxHealth)
   const clearPowerUpTimers = useGameStore((s) => s.clearPowerUpTimers)
   const checkpointRef = useRef(0)
 
-  useEffect(() => {
-    return () => {
-      clearPowerUpTimers()
-    }
-  }, [clearPowerUpTimers])
+  /* clear timers on unmount */
+  useEffect(() => () => clearPowerUpTimers(), [clearPowerUpTimers])
 
+  /* game loop */
   useFrame(({ clock }, dt) => {
     if (isGameOver || isGameWon) return
+
+    /* 15-s summarization checkpoint */
     const elapsed = clock.getElapsedTime()
     if (elapsed - checkpointRef.current >= 15) {
       shrinkMaxHealth(10)
       checkpointRef.current = elapsed
     }
 
+    /* scroll chunks towards player */
     chunkRefs.current.forEach((g) => {
       if (g) g.position.z -= 5 * dt
     })
 
+    /* recycle first chunk when it’s far behind */
     const firstRef = chunkRefs.current[0]
     const firstChunk = chunks[0]
     if (firstRef && firstChunk && firstRef.position.z + firstChunk.length < -20) {
       const lastRef = chunkRefs.current[chunkRefs.current.length - 1]
       const lastChunk = chunks[chunks.length - 1]
-      if (lastRef && lastChunk) {
-        const next = chunkGen.current.next().value
-        const newZ = lastRef.position.z + lastChunk.length
-        next.startZ = newZ
-        chunkRefs.current = [...chunkRefs.current.slice(1)]
-        firstRef.position.set(0, 0, newZ)
-        chunkRefs.current.push(firstRef)
-        setChunks((prev) => [...prev.slice(1), next])
-      }
+
+      /* next procedural chunk */
+      const next = chunkGen.current.next().value
+      const newZ = (lastRef?.position.z ?? 0) + (lastChunk?.length ?? 0)
+
+      /* move the recycled mesh & update arrays */
+      firstRef.position.set(0, 0, newZ)
+      next.startZ = newZ
+      chunkRefs.current = [...chunkRefs.current.slice(1), firstRef]
+      setChunks((prev) => [...prev.slice(1), next])
     }
   })
 
   return (
     <>
-      {/* Lights */}
+      {/* Lights & grid */}
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <NeonGrid />
+
+      {/* Track chunks */}
       {chunks.map((chunk, i) => (
         <TrackChunk
           key={chunk.id}
@@ -97,13 +103,13 @@ const SceneContent: FC = () => {
         />
       ))}
 
-      {/* Player passes array of refs for collision checks */}
+      {/* Player */}
       <Player
         position={[0, 0.5, 0]}
         obstacles={[genericObstacleRef, injCubeRef, gateRef, wallRef]}
       />
 
-      {/* Collectible */}
+      {/* Collectibles & power-ups */}
       <Token position={[0, 0.5, -3]} />
       <SystemPromptPowerUp position={[0, 0.5, -6]} />
       <RAGPortal position={[0, 0.5, -9]} />
@@ -114,10 +120,9 @@ const SceneContent: FC = () => {
       <RateLimitGate ref={gateRef} position={[0, 0, -8]} />
       <SequenceLengthWall ref={wallRef} position={[0, 1, -12]} />
 
-      {/* Visuals */}
+      {/* Effects & HUD */}
       <VisualEffects />
       <Stats />
-      {/* Controls */}
       <OrbitControls />
     </>
   )
