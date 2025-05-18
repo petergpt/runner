@@ -38,7 +38,7 @@ const SceneContent: FC = () => {
       arr.push(chunkGen.current.next().value)
     return arr
   })
-  const chunkRefs = useRef<Group[]>([])
+  const chunkRefs = useRef<(Group | null)[]>([])
 
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
@@ -61,20 +61,22 @@ const SceneContent: FC = () => {
     }
 
     chunkRefs.current.forEach((g) => {
-      g.position.z -= 5 * dt
+      if (g) g.position.z -= 5 * dt
     })
 
     const firstRef = chunkRefs.current[0]
     const firstChunk = chunks[0]
-    if (firstRef && firstRef.position.z + firstChunk.length < -20) {
+    if (firstRef && firstChunk && firstRef.position.z + firstChunk.length < -20) {
       const lastRef = chunkRefs.current[chunkRefs.current.length - 1]
       const lastChunk = chunks[chunks.length - 1]
-      const next = chunkGen.current.next().value
-      const newZ = lastRef.position.z + lastChunk.length
-      firstRef.position.z = newZ
-      next.startZ = newZ
-      chunkRefs.current.push(chunkRefs.current.shift()!)
-      setChunks((prev) => [...prev.slice(1), next])
+      if (lastRef && lastChunk) {
+        const next = chunkGen.current.next().value
+        const newZ = lastRef.position.z + lastChunk.length
+        firstRef.position.z = newZ
+        next.startZ = newZ
+        chunkRefs.current = [...chunkRefs.current.slice(1), firstRef]
+        setChunks((prev) => [...prev.slice(1), next])
+      }
     }
   })
 
