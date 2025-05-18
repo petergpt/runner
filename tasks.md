@@ -140,6 +140,6 @@ request conflicts.
     - Ensure components do not forward an `id` prop to three.js objects and remove any accidental mutations.
     - Verify the scene no longer triggers the "Hooks can only be used within the Canvas component" warning.
 
-21. **Regression Tests for Game Launch**
+21. **Regression Tests for Game Launch** ✅ *Complete*
     - Add an integration test that mounts `GameScene` inside a testing canvas and asserts no errors are thrown.
     - Run this test in CI to prevent future regressions.
