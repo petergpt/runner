@@ -10,7 +10,7 @@ import { useTrackStore } from '../../store/trackStore'
  * A red cube that rotates continuously.
  * Represents a Prompt-Injection obstacle.
  */
-const SPEED = 5
+
 
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
 const PromptInjectionCube: FC<MeshProps> = ({ id: _discard, ...props }) => {
@@ -19,6 +19,7 @@ const PromptInjectionCube: FC<MeshProps> = ({ id: _discard, ...props }) => {
   const active = useGameStore((s) => s.systemPromptActive)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const trackSpeed = useGameStore((s) => s.trackSpeed)
   const nextPosition = useTrackStore((s) => s.nextPosition)
 
   const reset = useCallback(() => {
@@ -41,7 +42,7 @@ const PromptInjectionCube: FC<MeshProps> = ({ id: _discard, ...props }) => {
     if (!mesh) return
     mesh.rotation.x += delta
     mesh.rotation.y += delta
-    mesh.position.z += SPEED * delta
+    mesh.position.z += trackSpeed * delta
     if (mesh.position.z > 5) reset()
   })
 

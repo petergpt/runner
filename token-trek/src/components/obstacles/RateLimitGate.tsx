@@ -9,7 +9,7 @@ import { useTrackStore } from '../../store/trackStore'
 /**
  * Two bars that slide together to block a lane.
  */
-const SPEED = 5
+
 
 interface GroupProps extends Omit<ThreeElements['group'], 'id'> { id?: never }
 const RateLimitGate: FC<GroupProps> = ({ id: _discard, ...props }) => {
@@ -19,6 +19,7 @@ const RateLimitGate: FC<GroupProps> = ({ id: _discard, ...props }) => {
   const groupRef = useRef<Mesh>(null!)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const trackSpeed = useGameStore((s) => s.trackSpeed)
   const nextPosition = useTrackStore((s) => s.nextPosition)
 
   const reset = useCallback(() => {
@@ -37,7 +38,7 @@ const RateLimitGate: FC<GroupProps> = ({ id: _discard, ...props }) => {
     leftRef.current.position.x = -1 - offset
     rightRef.current.position.x = 1 + offset
     if (groupRef.current) {
-      groupRef.current.position.z += SPEED * dt
+      groupRef.current.position.z += trackSpeed * dt
       if (groupRef.current.position.z > 5) reset()
     }
   })

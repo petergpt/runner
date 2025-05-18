@@ -9,7 +9,6 @@ import { useGameStore } from '../store/gameStore'
 import { useTrackStore } from '../store/trackStore'
 
 const LANE_WIDTH = 2
-const SPEED = 5
 const lanes = [-LANE_WIDTH, 0, LANE_WIDTH]
 
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
@@ -20,6 +19,7 @@ const SystemPromptPowerUp: FC<MeshProps> = ({ id: _discard, ...props }) => {
   const activate = useGameStore((s) => s.activateSystemPrompt)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const trackSpeed = useGameStore((s) => s.trackSpeed)
   const nextPosition = useTrackStore((s) => s.nextPosition)
 
   const reset = useCallback(() => {
@@ -36,7 +36,7 @@ const SystemPromptPowerUp: FC<MeshProps> = ({ id: _discard, ...props }) => {
     if (isGameOver || isGameWon) return
     const mesh = meshRef.current
     mesh.rotation.y += dt
-    mesh.position.z -= SPEED * dt
+    mesh.position.z -= trackSpeed * dt
     if (mesh.position.z < -5) {
       reset()
       return
