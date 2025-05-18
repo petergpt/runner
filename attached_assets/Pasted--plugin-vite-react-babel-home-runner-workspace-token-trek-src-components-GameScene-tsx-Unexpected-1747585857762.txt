@@ -1,0 +1,61 @@
+[plugin:vite:react-babel] /home/runner/workspace/token-trek/src/components/GameScene.tsx: Unexpected token, expected "}" (138:22)
+  141 |         />
+/home/runner/workspace/token-trek/src/components/GameScene.tsx:138:22
+136|        {Array.from({ length: GENERIC_COUNT }).map((_, i) => (
+137|          <Obstacle
+138|            key={`o${i}`]
+   |                        ^
+139|            ref={genericRefs.current[i]}
+140|            position={[0, 0.5, -50]}
+    at constructor (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:360:19)
+    at TypeScriptParserMixin.raise (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:6613:19)
+    at TypeScriptParserMixin.unexpected (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:6633:16)
+    at TypeScriptParserMixin.expect (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:6914:12)
+    at TypeScriptParserMixin.jsxParseExpressionContainer (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4643:10)
+    at TypeScriptParserMixin.jsxParseAttributeValue (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4610:21)
+    at TypeScriptParserMixin.jsxParseAttribute (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4659:38)
+    at TypeScriptParserMixin.jsxParseOpeningElementAfterName (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4673:28)
+    at TypeScriptParserMixin.jsxParseOpeningElementAfterName (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:9989:18)
+    at TypeScriptParserMixin.jsxParseOpeningElementAt (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4668:17)
+    at TypeScriptParserMixin.jsxParseElementAt (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4692:33)
+    at TypeScriptParserMixin.jsxParseElement (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4755:17)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4765:19)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10992:23)
+    at TypeScriptParserMixin.parseUpdate (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10977:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10957:23)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:9779:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10810:61)
+    at TypeScriptParserMixin.parseExprOps (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10815:23)
+    at TypeScriptParserMixin.parseMaybeConditional (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10792:23)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10745:21)
+    at /home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:9717:39
+    at TypeScriptParserMixin.tryParse (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:6922:20)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:9717:18)
+    at /home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10714:39
+    at TypeScriptParserMixin.allowInAnd (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:12334:12)
+    at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10714:17)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:11591:28)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:11242:23)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4770:20)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10992:23)
+    at TypeScriptParserMixin.parseUpdate (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10977:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10957:23)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:9779:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10810:61)
+    at TypeScriptParserMixin.parseExprOps (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10815:23)
+    at TypeScriptParserMixin.parseMaybeConditional (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10792:23)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10745:21)
+    at TypeScriptParserMixin.parseMaybeAssign (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:9728:20)
+    at TypeScriptParserMixin.parseFunctionBody (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:12011:24)
+    at TypeScriptParserMixin.parseArrowExpression (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:11993:10)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:11603:12)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:11242:23)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:4770:20)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10992:23)
+    at TypeScriptParserMixin.parseUpdate (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10977:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10957:23)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:9779:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10810:61)
+    at TypeScriptParserMixin.parseExprOps (/home/runner/workspace/token-trek/node_modules/.pnpm/@babel+parser@7.27.2/node_modules/@babel/parser/lib/index.js:10815:23
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.
