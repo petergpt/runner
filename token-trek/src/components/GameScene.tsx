@@ -142,14 +142,14 @@ const SceneContent: FC = () => {
       ))}
       {Array.from({ length: CUBE_COUNT }).map((_, i) => (
         <PromptInjectionCube
-          key={`c${i}`]
+          key={`c${i}`}
           ref={cubeRefs.current[i]}
           position={[0, 0.5, -50]}
         />
       ))}
       {Array.from({ length: GATE_COUNT }).map((_, i) => (
         <RateLimitGate
-          key={`g${i}`]
+          key={`g${i}`}
           ref={gateRefs.current[i]}
           position={[0, 0, -50]}
         />
