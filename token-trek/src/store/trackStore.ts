@@ -6,27 +6,54 @@ interface Position {
   z: number
 }
 
-interface TrackState {
+export const useTrackStore = create<{
+  /**
+   * Returns the next spawn position along the track.
+   * @param lane If provided, forces an object to spawn in the given lane.
+   */
   nextPosition: (lane?: number) => Position
-}
+}>(() => {
+  // Generator yields TrackChunks containing lane coordinates and length
+  const gen = trackChunkGenerator()
 
-export const useTrackStore = create<TrackState>(() => {
-  const lanes = trackChunkGenerator().next().value.lanes
-  let cursor = -20
-  const STEP = 8
-  const LIMIT = -100
+  // Prime the generator so we have initial lane data to work with
+  let currentChunk = gen.next().value
+  const lanes = currentChunk.lanes
+
+  /**
+   * Cursor marches forward (+Z) each time we spawn so objects appear in a
+   * steady rhythm rather than at purely random depths. The world uses a
+   * -Z forward convention, so we negate the cursor when converting to world
+   * coordinates.
+   */
+  let cursor = 0
+
+  /**
+   * When the cursor exceeds this threshold we wrap it to avoid very large
+   * floating‑point values far from the origin.
+   */
+  const SPAWN_LIMIT = 100
+
   return {
-    /**
-     * Spawn positions march forward along the Z axis so objects appear in a
-     * consistent rhythm rather than jumping randomly. Once the cursor passes
-     * {@link LIMIT}, it wraps back near the player to avoid huge values.
-     */
-    nextPosition: (lane?: number) => {
-      const laneIndex = lane ?? Math.floor(Math.random() * lanes.length)
-      const pos = { x: lanes[laneIndex], z: cursor }
-      cursor -= STEP + Math.random() * 4
-      if (cursor < LIMIT) cursor = -20
-      return pos
+    nextPosition: (forcedLane?: number): Position => {
+      // Advance the generator and fall back to the previous chunk if it stops
+      currentChunk = gen.next().value ?? currentChunk
+
+      // Pick a lane, either random or caller‑specified
+      const laneIndex =
+        forcedLane ?? Math.floor(Math.random() * currentChunk.lanes.length)
+      const x = currentChunk.lanes[laneIndex]
+
+      // Move the cursor forward by half the chunk length for even spacing
+      cursor += currentChunk.length / 2
+
+      // Wrap the cursor so numbers stay modest and precision remains high
+      if (cursor > SPAWN_LIMIT) cursor -= SPAWN_LIMIT
+
+      // Convert the positive cursor to a negative‑Z world position
+      const z = -cursor
+
+      return { x, z }
     },
   }
 })

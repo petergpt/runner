@@ -1,141 +1,150 @@
-import type { FC, RefObject, MutableRefObject } from 'react'
-import { useEffect, useRef } from 'react'
-import type { ThreeElements } from '@react-three/fiber'
+import { FC, RefObject, MutableRefObject, useEffect, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
+import type { ThreeElements } from '@react-three/fiber'
 import type { Mesh, Box3, MeshStandardMaterial } from 'three'
-import { Box3 as ThreeBox3 } from 'three'
+import { Box3 as ThreeBox3, MathUtils } from 'three'
 
 import { contextWindowClamp } from '../game/contextWindowClamp'
-import { useGameStore }   from '../store/gameStore'
+import { useGameStore } from '../store/gameStore'
 import { usePlayerStore } from '../store/playerStore'
 
-const LANE_WIDTH    = 2
-const BONUS_OFFSET  = 4
+const LANE_WIDTH = 2
+const LANES = [-LANE_WIDTH, 0, LANE_WIDTH]
+const BONUS_OFFSET = 4
 const JUMP_VELOCITY = 8
-const GRAVITY       = -20
-const FLOOR_Y       = 0.5
+const GRAVITY = -20
+const FLOOR_Y = 0.5
 
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
-type PlayerProps = MeshProps & {
+
+interface PlayerProps extends MeshProps {
   obstacles?: RefObject<Mesh>[]
-  /**
-   * External set tracking which obstacles have already triggered a collision.
-   * Passed in from the scene so obstacles can reset this state when they
-   * recycle.
-   */
+  /** External set tracking which obstacles have already triggered a collision. */
   collidedRef?: MutableRefObject<Set<Mesh>>
 }
 
 const Player: FC<PlayerProps> = ({
-  id: _discard,
   obstacles = [],
   collidedRef,
-  ...props
+  ...meshProps
 }) => {
-  void _discard
-  const meshRef   = useRef<Mesh>(null!)
+  const meshRef = useRef<Mesh>(null!)
   const materialRef = useRef<MeshStandardMaterial>(null!)
+
+  /* --- movement state --- */
   const velocityY = useRef(0)
-  const jumping   = useRef(false)
+  const jumping = useRef(false)
+
+  /* --- collision state --- */
   const internalCollided = useRef<Set<Mesh>>(new Set())
   const collided = collidedRef ?? internalCollided
 
-  /* Boxes reused each frame to avoid GC churn */
-  const playerBox   = useRef<Box3>(new ThreeBox3())
+  /* --- bounding boxes (re-used each frame to avoid GC) --- */
+  const playerBox = useRef<Box3>(new ThreeBox3())
   const obstacleBox = useRef<Box3>(new ThreeBox3())
 
-  /* Global stores */
-  const lane        = usePlayerStore((s) => s.lane)
-  const setLane     = usePlayerStore((s) => s.setLane)
-  const reduceHealth= useGameStore((s) => s.reduceHealth)
-  const isGameOver  = useGameStore((s) => s.isGameOver)
-  const isGameWon   = useGameStore((s) => s.isGameWon)
-  const ragPortalActive = useGameStore((s) => s.ragPortalActive)
-  const lastDamage  = useGameStore((s) => s.lastDamageTime)
-  const lastToken   = useGameStore((s) => s.lastTokenTime)
+  /* --- global stores --- */
+  const lane = usePlayerStore((s) => s.lane)
+  const setLane = usePlayerStore((s) => s.setLane)
 
-  /* Keyboard controls */
+  const {
+    reduceHealth,
+    isGameOver,
+    isGameWon,
+    ragPortalActive,
+    lastDamageTime,
+    lastTokenTime,
+  } = useGameStore((s) => ({
+    reduceHealth: s.reduceHealth,
+    isGameOver: s.isGameOver,
+    isGameWon: s.isGameWon,
+    ragPortalActive: s.ragPortalActive,
+    lastDamageTime: s.lastDamageTime,
+    lastTokenTime: s.lastTokenTime,
+  }))
+
+  /* --- helpers --- */
+  const flashColor = (hex: string, duration = 200) => {
+    if (!materialRef.current) return
+    materialRef.current.color.set(hex)
+    setTimeout(() => materialRef.current?.color.set('hotpink'), duration)
+  }
+
+  /* --- keyboard controls --- */
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.code === 'KeyA' || e.code === 'ArrowLeft')
-        setLane((l) => contextWindowClamp(l - 1))
-      else if (e.code === 'KeyD' || e.code === 'ArrowRight')
-        setLane((l) => contextWindowClamp(l + 1))
-      else if (e.code === 'Space' && !jumping.current) {
-        jumping.current  = true
-        velocityY.current = JUMP_VELOCITY
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.code) {
+        case 'KeyA':
+        case 'ArrowLeft':
+          setLane((l) => contextWindowClamp(l - 1))
+          break
+        case 'KeyD':
+        case 'ArrowRight':
+          setLane((l) => contextWindowClamp(l + 1))
+          break
+        case 'Space':
+          if (!jumping.current) {
+            jumping.current = true
+            velocityY.current = JUMP_VELOCITY
+          }
+          break
       }
     }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [setLane])
 
-  /* Visual feedback on damage */
+  /* --- visual feedback --- */
   useEffect(() => {
-    if (!materialRef.current || !lastDamage) return
-    materialRef.current.color.set('red')
-    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
-    return () => clearTimeout(id)
-  }, [lastDamage])
+    if (lastDamageTime) flashColor('red')
+  }, [lastDamageTime])
 
-  /* Visual feedback on token */
   useEffect(() => {
-    if (!materialRef.current || !lastToken) return
-    materialRef.current.color.set('cyan')
-    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
-    return () => clearTimeout(id)
-  }, [lastToken])
+    if (lastTokenTime) flashColor('cyan')
+  }, [lastTokenTime])
 
-  /* Visual feedback on damage */
-  useEffect(() => {
-    if (!materialRef.current || !lastDamage) return
-    materialRef.current.color.set('red')
-    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
-    return () => clearTimeout(id)
-  }, [lastDamage])
-
-  /* Visual feedback on token */
-  useEffect(() => {
-    if (!materialRef.current || !lastToken) return
-    materialRef.current.color.set('cyan')
-    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
-    return () => clearTimeout(id)
-  }, [lastToken])
-
-  /* Per-frame logic */
+  /* --- per-frame logic --- */
   useFrame((_, dt) => {
     if (isGameOver || isGameWon) return
 
     const mesh = meshRef.current
-    const offset = ragPortalActive ? BONUS_OFFSET : 0
-    mesh.position.x = (-1 + lane) * LANE_WIDTH + offset // snap to lane or bonus
 
-    /* jump / gravity */
+    /* side-to-side lane movement with bonus offset */
+    const targetX = LANES[lane] + (ragPortalActive ? BONUS_OFFSET : 0)
+    mesh.position.x = MathUtils.damp(mesh.position.x, targetX, 10, dt)
+
+    /* jumping / gravity */
     if (jumping.current) {
       velocityY.current += GRAVITY * dt
-      mesh.position.y   += velocityY.current * dt
+      mesh.position.y += velocityY.current * dt
       if (mesh.position.y <= FLOOR_Y) {
-        mesh.position.y   = FLOOR_Y
-        jumping.current   = false
+        mesh.position.y = FLOOR_Y
+        jumping.current = false
         velocityY.current = 0
       }
     }
 
     /* collision detection */
     playerBox.current.setFromObject(mesh)
-    obstacles.forEach((oRef) => {
-      const o = oRef.current
-      if (!o || !o.visible || collided.current.has(o)) return
-      obstacleBox.current.setFromObject(o)
+    obstacles.forEach((oref) => {
+      const obstacle = oref.current
+      if (!obstacle || !obstacle.visible || collided.current.has(obstacle)) return
+      obstacleBox.current.setFromObject(obstacle)
       if (playerBox.current.intersectsBox(obstacleBox.current)) {
-        collided.current.add(o)
+        collided.current.add(obstacle)
         reduceHealth(10)
       }
     })
   })
 
   return (
-    <mesh ref={meshRef} {...props} position={[0, FLOOR_Y, 0]}>
+    <mesh
+      ref={meshRef}
+      {...meshProps}
+      position={[0, FLOOR_Y, 0]}
+      castShadow
+      receiveShadow
+    >
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial ref={materialRef} color="hotpink" />
     </mesh>
