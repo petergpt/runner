@@ -5,10 +5,10 @@ import { useFrame } from '@react-three/fiber'
 import type { ThreeElements } from '@react-three/fiber'
 import { usePlayerStore } from '../store/playerStore'
 import { useGameStore } from '../store/gameStore'
+import { useTrackStore } from '../store/trackStore'
 
 const LANE_WIDTH = 2
 const SPEED = 5
-
 const lanes = [-LANE_WIDTH, 0, LANE_WIDTH]
 
 const Token: FC<ThreeElements['mesh']> = (props) => {
@@ -18,14 +18,13 @@ const Token: FC<ThreeElements['mesh']> = (props) => {
   const ragPortalActive = useGameStore((s) => s.ragPortalActive)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const nextPosition = useTrackStore((s) => s.nextPosition)
 
   const resetToken = useCallback(() => {
     if (!meshRef.current) return
-    meshRef.current.position.z =
-      (ragPortalActive ? 10 : 20) + Math.random() * (ragPortalActive ? 5 : 10)
-    const laneIndex = ragPortalActive ? lane : Math.floor(Math.random() * 3)
-    meshRef.current.position.x = lanes[laneIndex]
-  }, [ragPortalActive, lane])
+    const { x, z } = nextPosition(ragPortalActive ? lane : undefined)
+    meshRef.current.position.set(x, 0.5, z)
+  }, [nextPosition, ragPortalActive, lane])
 
   useEffect(() => {
     resetToken()

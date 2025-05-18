@@ -111,7 +111,7 @@ request conflicts.
     - Use `trackChunkGenerator` inside `GameScene` to create a scrolling track.
     - Recycle chunks as they move behind the player to save memory.
 
-14. **Dynamic Obstacles and Tokens**
+14. **Dynamic Obstacles and Tokens** ✅ *Complete*
     - Spawn obstacles and tokens procedurally along each track chunk.
     - Remove or deactivate items once they pass the player.
 
