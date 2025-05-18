@@ -114,23 +114,6 @@ const GameScene: FC = () => {
         {/* Controls */}
         <OrbitControls />
       </Canvas>
-
-      {/* Simple overlays when the store flags game-over or win */}
-      {(isGameOver || isGameWon) && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            color: 'white',
-            fontSize: '2rem',
-            pointerEvents: 'none',
-          }}
-        >
-          {isGameWon ? 'AGI Achieved!' : 'Game Over'}
-        </div>
-      )}
     </>
   )
 }
