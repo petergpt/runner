@@ -10,6 +10,7 @@ import { useTrackStore } from '../store/trackStore'
 const LANE_WIDTH = 2
 const SPEED = 5
 const lanes = [-LANE_WIDTH, 0, LANE_WIDTH]
+const BONUS_OFFSET = 4
 
 const Token: FC<ThreeElements['mesh']> = (props) => {
   const meshRef = useRef<Mesh>(null!)
@@ -23,7 +24,8 @@ const Token: FC<ThreeElements['mesh']> = (props) => {
   const resetToken = useCallback(() => {
     if (!meshRef.current) return
     const { x, z } = nextPosition(ragPortalActive ? lane : undefined)
-    meshRef.current.position.set(x, 0.5, z)
+    const offset = ragPortalActive ? BONUS_OFFSET : 0
+    meshRef.current.position.set(x + offset, 0.5, z)
   }, [nextPosition, ragPortalActive, lane])
 
   useEffect(() => {
@@ -39,10 +41,11 @@ const Token: FC<ThreeElements['mesh']> = (props) => {
       resetToken()
       return
     }
+    const offset = ragPortalActive ? BONUS_OFFSET : 0
     if (
       mesh.position.z <= 0 &&
       mesh.position.z > -1 &&
-      Math.abs(mesh.position.x - lanes[lane]) < 0.1
+      Math.abs(mesh.position.x - (lanes[lane] + offset)) < 0.1
     ) {
       collectToken()
       resetToken()
