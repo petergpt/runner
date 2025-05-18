@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GameScene from './components/GameScene'
+import ErrorBoundary from './components/ErrorBoundary'
 import HUD from './components/HUD'
 import StartMenu from './components/StartMenu'
 import GameOverScreen from './components/GameOverScreen'
@@ -26,7 +27,11 @@ function App() {
 
   return (
     <>
-      {started && <GameScene />}
+      {started && (
+        <ErrorBoundary>
+          <GameScene />
+        </ErrorBoundary>
+      )}
       {started && <HUD />}
       {!started && <StartMenu onStart={start} />}
       {showEndScreen && <GameOverScreen onRestart={restart} />}

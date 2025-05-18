@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Stats } from '@react-three/drei'
 import type { Mesh, Group } from 'three'
@@ -43,7 +43,14 @@ const GameScene: FC = () => {
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
   const shrinkMaxHealth = useGameStore((s) => s.shrinkMaxHealth)
+  const clearPowerUpTimers = useGameStore((s) => s.clearPowerUpTimers)
   const checkpointRef = useRef(0)
+
+  useEffect(() => {
+    return () => {
+      clearPowerUpTimers()
+    }
+  }, [clearPowerUpTimers])
 
   useFrame(({ clock }, dt) => {
     if (isGameOver || isGameWon) return
