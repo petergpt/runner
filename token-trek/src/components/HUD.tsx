@@ -1,10 +1,32 @@
 import type { FC, CSSProperties } from 'react'
+import { useEffect, useState } from 'react'
 import { useGameStore, AGI_GOAL } from '../store/gameStore'
 import styles from './HUD.module.css'
 
+/**
+ * Continuously updates tokens-per-second via requestAnimationFrame so
+ * the HUD does not trigger cascading store updates each render.
+ */
+function useTokensPerSecond(): number {
+  const compute = useGameStore((s) => s.tokensPerSecond)
+  const [value, setValue] = useState(() => compute())
+
+  useEffect(() => {
+    let frame: number
+    const update = () => {
+      setValue(compute())
+      frame = requestAnimationFrame(update)
+    }
+    frame = requestAnimationFrame(update)
+    return () => cancelAnimationFrame(frame)
+  }, [compute])
+
+  return value
+}
+
 const HUD: FC = () => {
   const tokenCount = useGameStore((s) => s.tokenCount)
-  const tokensPerSecond = useGameStore((s) => s.tokensPerSecond())
+  const tokensPerSecond = useTokensPerSecond()
   const health = useGameStore((s) => s.health)
   const maxHealth = useGameStore((s) => s.maxHealth)
 
