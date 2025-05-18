@@ -123,7 +123,7 @@ request conflicts.
     - Teleport the player to a temporary bonus lane filled with tokens.
     - Return to the normal lanes after the portal effect ends.
 
-17. **Game Flow & Restart**
+17. **Game Flow & Restart** ✅ *Complete*
     - Add a start menu and allow restarting after game over or win.
     - Store the best token count in `localStorage` as a high score.
 

@@ -30,6 +30,10 @@ interface GameState {
   startTime: number
   collectToken: () => void
   tokensPerSecond: () => number
+
+  /* Meta */
+  highScore: number
+  resetGame: () => void
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
@@ -85,4 +89,29 @@ export const useGameStore = create<GameState>((set, get) => ({
     const elapsed = (performance.now() - get().startTime) / 1000
     return elapsed > 0 ? get().tokenCount / elapsed : 0
   },
+
+  /* ── meta ─────────────────────────────────────────────────────────── */
+  highScore:
+    typeof window === 'undefined'
+      ? 0
+      : Number(window.localStorage.getItem('highScore')) || 0,
+  resetGame: () =>
+    set((state) => {
+      const highScore =
+        state.tokenCount > state.highScore ? state.tokenCount : state.highScore
+      if (typeof window !== 'undefined')
+        window.localStorage.setItem('highScore', String(highScore))
+      return {
+        health: 100,
+        maxHealth: 100,
+        isGameOver: false,
+        isGameWon: false,
+        systemPromptActive: false,
+        ragPortalActive: false,
+        tokenCount: 0,
+        multiplier: 1,
+        startTime: performance.now(),
+        highScore,
+      }
+    }),
 }))
