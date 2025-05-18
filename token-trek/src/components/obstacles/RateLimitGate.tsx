@@ -12,7 +12,8 @@ import { useTrackStore } from '../../store/trackStore'
 
 
 interface GroupProps extends Omit<ThreeElements['group'], 'id'> { id?: never }
-const RateLimitGate: FC<GroupProps> = ({ id: _discard, ...props }) => {
+interface Props extends GroupProps { onReset?: (mesh: Mesh) => void }
+const RateLimitGate: FC<Props> = ({ id: _discard, onReset, ...props }) => {
   void _discard
   const leftRef = useRef<Mesh>(null!)
   const rightRef = useRef<Mesh>(null!)
@@ -24,8 +25,11 @@ const RateLimitGate: FC<GroupProps> = ({ id: _discard, ...props }) => {
 
   const reset = useCallback(() => {
     const { x, z } = nextPosition()
-    if (groupRef.current) groupRef.current.position.set(x, 0, z)
-  }, [nextPosition])
+    if (groupRef.current) {
+      groupRef.current.position.set(x, 0, z)
+      if (onReset) onReset(groupRef.current)
+    }
+  }, [nextPosition, onReset])
 
   useEffect(() => {
     reset()

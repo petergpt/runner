@@ -13,7 +13,8 @@ import { useTrackStore } from '../../store/trackStore'
 
 
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
-const PromptInjectionCube: FC<MeshProps> = ({ id: _discard, ...props }) => {
+interface Props extends MeshProps { onReset?: (mesh: Mesh) => void }
+const PromptInjectionCube: FC<Props> = ({ id: _discard, onReset, ...props }) => {
   void _discard
   const meshRef = useRef<Mesh>(null!)
   const active = useGameStore((s) => s.systemPromptActive)
@@ -26,7 +27,8 @@ const PromptInjectionCube: FC<MeshProps> = ({ id: _discard, ...props }) => {
     if (!meshRef.current) return
     const { x, z } = nextPosition()
     meshRef.current.position.set(x, 0.5, z)
-  }, [nextPosition])
+    if (onReset) onReset(meshRef.current)
+  }, [nextPosition, onReset])
 
   useEffect(() => {
     if (meshRef.current) meshRef.current.visible = !active

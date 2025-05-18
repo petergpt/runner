@@ -31,7 +31,8 @@ const SceneContent: FC = () => {
   const genericRefs = useRef([...Array(GENERIC_COUNT)].map(() => createRef<Mesh>()))
   const cubeRefs = useRef([...Array(CUBE_COUNT)].map(() => createRef<Mesh>()))
   const gateRefs = useRef([...Array(GATE_COUNT)].map(() => createRef<Mesh>()))
-  const wallRef = useRef<Mesh>(null!)
+  const wallRef = createRef<Mesh>()
+  const collidedRef = useRef<Set<Mesh>>(new Set())
 
   /* procedural track */
   const chunkGen = useRef(trackChunkGenerator())
@@ -115,15 +116,21 @@ const SceneContent: FC = () => {
       ))}
 
       {/* Player */}
-      <Player
-        position={[0, 0.5, 0]}
-        obstacles={[
-          ...genericRefs.current,
-          ...cubeRefs.current,
-          ...gateRefs.current,
-          wallRef,
-        ]}
-      />
+      {(() => {
+        const obstacleRefs: React.RefObject<Mesh>[] = [
+          ...(genericRefs.current as React.RefObject<Mesh>[]),
+          ...(cubeRefs.current as React.RefObject<Mesh>[]),
+          ...(gateRefs.current as React.RefObject<Mesh>[]),
+          wallRef as React.RefObject<Mesh>,
+        ]
+        return (
+          <Player
+            position={[0, 0.5, 0]}
+            obstacles={obstacleRefs}
+            collidedRef={collidedRef}
+          />
+        )
+      })()}
 
       {/* Collectibles & power‑ups */}
       {Array.from({ length: 15 }).map((_, i) => (
@@ -138,6 +145,7 @@ const SceneContent: FC = () => {
           key={`o${i}`}
           ref={genericRefs.current[i]}
           position={[0, 0.5, -50]}
+          onReset={(m) => collidedRef.current.delete(m)}
         />
       ))}
       {Array.from({ length: CUBE_COUNT }).map((_, i) => (
@@ -145,6 +153,7 @@ const SceneContent: FC = () => {
           key={`c${i}`}
           ref={cubeRefs.current[i]}
           position={[0, 0.5, -50]}
+          onReset={(m) => collidedRef.current.delete(m)}
         />
       ))}
       {Array.from({ length: GATE_COUNT }).map((_, i) => (
@@ -152,9 +161,15 @@ const SceneContent: FC = () => {
           key={`g${i}`}
           ref={gateRefs.current[i]}
           position={[0, 0, -50]}
+          onReset={(m) => collidedRef.current.delete(m)}
         />
       ))}
-      <SequenceLengthWall ref={wallRef} position={[0, 1, -50]} appearAfter={15} />
+      <SequenceLengthWall
+        ref={wallRef}
+        position={[0, 1, -50]}
+        appearAfter={15}
+        onReset={(m) => collidedRef.current.delete(m)}
+      />
 
       {/* Effects & HUD */}
       <VisualEffects />

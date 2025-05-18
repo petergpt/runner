@@ -13,11 +13,17 @@ interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
 
 interface Props extends MeshProps {
   appearAfter?: number
+  onReset?: (mesh: Mesh) => void
 }
 
 
 
-const SequenceLengthWall: FC<Props> = ({ id: _discard, appearAfter = 30, ...props }) => {
+const SequenceLengthWall: FC<Props> = ({
+  id: _discard,
+  appearAfter = 30,
+  onReset,
+  ...props
+}) => {
   void _discard
   const meshRef = useRef<Mesh>(null!)
   const isGameOver = useGameStore((s) => s.isGameOver)
@@ -26,13 +32,17 @@ const SequenceLengthWall: FC<Props> = ({ id: _discard, appearAfter = 30, ...prop
   const nextPosition = useTrackStore((s) => s.nextPosition)
   const startTime = useRef<number>(0)
 
-  const reset = useCallback((clockTime: number) => {
-    if (!meshRef.current) return
-    const { x, z } = nextPosition()
-    meshRef.current.position.set(x, 1, z)
-    meshRef.current.visible = false
-    startTime.current = clockTime
-  }, [nextPosition])
+  const reset = useCallback(
+    (clockTime: number) => {
+      if (!meshRef.current) return
+      const { x, z } = nextPosition()
+      meshRef.current.position.set(x, 1, z)
+      meshRef.current.visible = false
+      startTime.current = clockTime
+      if (onReset) onReset(meshRef.current)
+    },
+    [nextPosition, onReset],
+  )
 
   useEffect(() => {
     reset(0)
