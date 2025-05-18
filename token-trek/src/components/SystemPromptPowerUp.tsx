@@ -36,14 +36,14 @@ const SystemPromptPowerUp: FC<MeshProps> = ({ id: _discard, ...props }) => {
     if (isGameOver || isGameWon) return
     const mesh = meshRef.current
     mesh.rotation.y += dt
-    mesh.position.z -= trackSpeed * dt
-    if (mesh.position.z < -5) {
+    mesh.position.z += trackSpeed * dt
+    if (mesh.position.z > 5) {
       reset()
       return
     }
     if (
-      mesh.position.z <= 0 &&
-      mesh.position.z > -1 &&
+      mesh.position.z >= 0 &&
+      mesh.position.z < 1 &&
       Math.abs(mesh.position.x - lanes[lane]) < 0.1
     ) {
       activate()

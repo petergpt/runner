@@ -29,6 +29,8 @@ const HUD: FC = () => {
   const tokensPerSecond = useTokensPerSecond()
   const health = useGameStore((s) => s.health)
   const maxHealth = useGameStore((s) => s.maxHealth)
+  const systemPrompt = useGameStore((s) => s.systemPromptActive)
+  const ragPortal = useGameStore((s) => s.ragPortalActive)
   const [flashClass, setFlashClass] = useState('')
   const prevHealth = useRef(health)
   const prevTokens = useRef(tokenCount)
@@ -64,6 +66,12 @@ const HUD: FC = () => {
         <div>Tokens: {tokenCount.toFixed(0)} / {AGI_GOAL}</div>
         <div>T/s: {tokensPerSecond.toFixed(2)}</div>
       </div>
+      {systemPrompt && (
+        <div className={`${styles.powerMsg} ${styles.system}`}>SYSTEM PROMPT!</div>
+      )}
+      {ragPortal && (
+        <div className={`${styles.powerMsg} ${styles.bonus}`}>BONUS LANE!</div>
+      )}
     </div>
   )
 }
