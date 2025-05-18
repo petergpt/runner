@@ -119,7 +119,7 @@ request conflicts.
     - Display token progress as `token_count / 8192` per spec.
     - Show a win screen when the counter reaches 8192 tokens.
 
-16. **RAG Portal Enhancement**
+16. **RAG Portal Enhancement** ✅ *Complete*
     - Teleport the player to a temporary bonus lane filled with tokens.
     - Return to the normal lanes after the portal effect ends.
 

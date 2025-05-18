@@ -10,6 +10,7 @@ import { useGameStore }   from '../store/gameStore'
 import { usePlayerStore } from '../store/playerStore'
 
 const LANE_WIDTH    = 2
+const BONUS_OFFSET  = 4
 const JUMP_VELOCITY = 8
 const GRAVITY       = -20
 const FLOOR_Y       = 0.5
@@ -34,6 +35,7 @@ const Player: FC<PlayerProps> = ({ obstacles = [], ...props }) => {
   const reduceHealth= useGameStore((s) => s.reduceHealth)
   const isGameOver  = useGameStore((s) => s.isGameOver)
   const isGameWon   = useGameStore((s) => s.isGameWon)
+  const ragPortalActive = useGameStore((s) => s.ragPortalActive)
 
   /* Keyboard controls */
   useEffect(() => {
@@ -56,7 +58,8 @@ const Player: FC<PlayerProps> = ({ obstacles = [], ...props }) => {
     if (isGameOver || isGameWon) return
 
     const mesh = meshRef.current
-    mesh.position.x = (-1 + lane) * LANE_WIDTH   // snap to lane
+    const offset = ragPortalActive ? BONUS_OFFSET : 0
+    mesh.position.x = (-1 + lane) * LANE_WIDTH + offset // snap to lane or bonus
 
     /* jump / gravity */
     if (jumping.current) {
