@@ -23,7 +23,7 @@ import {
 } from './obstacles'
 import { useGameStore } from '../store/gameStore'
 
-const GameScene: FC = () => {
+const SceneContent: FC = () => {
   /* refs let Player poll obstacle positions for collision */
   const genericObstacleRef = useRef<Mesh>(null!)
   const injCubeRef = useRef<Mesh>(null!)
@@ -80,49 +80,50 @@ const GameScene: FC = () => {
 
   return (
     <>
-      <Canvas
-        camera={{ position: [0, 2, 5], fov: 60 }}
-        style={{ height: '100vh' }}
-      >
-        {/* Lights */}
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <NeonGrid />
-        {chunks.map((chunk, i) => (
-          <TrackChunk
-            key={i}
-            ref={(el) => {
-              if (el) chunkRefs.current[i] = el
-            }}
-            {...chunk}
-          />
-        ))}
-
-        {/* Player passes array of refs for collision checks */}
-        <Player
-          position={[0, 0.5, 0]}
-          obstacles={[genericObstacleRef, injCubeRef, gateRef, wallRef]}
+      {/* Lights */}
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} intensity={1} />
+      <NeonGrid />
+      {chunks.map((chunk, i) => (
+        <TrackChunk
+          key={i}
+          ref={(el) => {
+            if (el) chunkRefs.current[i] = el
+          }}
+          {...chunk}
         />
+      ))}
 
-        {/* Collectible */}
-        <Token position={[0, 0.5, -3]} />
-        <SystemPromptPowerUp position={[0, 0.5, -6]} />
-        <RAGPortal position={[0, 0.5, -9]} />
+      {/* Player passes array of refs for collision checks */}
+      <Player
+        position={[0, 0.5, 0]}
+        obstacles={[genericObstacleRef, injCubeRef, gateRef, wallRef]}
+      />
 
-        {/* Obstacles */}
-        <Obstacle ref={genericObstacleRef} position={[0, 0.5, -2]} />
-        <PromptInjectionCube ref={injCubeRef} position={[0, 0.5, -5]} />
-        <RateLimitGate ref={gateRef} position={[0, 0, -8]} />
-        <SequenceLengthWall ref={wallRef} position={[0, 1, -12]} />
+      {/* Collectible */}
+      <Token position={[0, 0.5, -3]} />
+      <SystemPromptPowerUp position={[0, 0.5, -6]} />
+      <RAGPortal position={[0, 0.5, -9]} />
 
-        {/* Visuals */}
-        <VisualEffects />
-        <Stats />
-        {/* Controls */}
-        <OrbitControls />
-      </Canvas>
+      {/* Obstacles */}
+      <Obstacle ref={genericObstacleRef} position={[0, 0.5, -2]} />
+      <PromptInjectionCube ref={injCubeRef} position={[0, 0.5, -5]} />
+      <RateLimitGate ref={gateRef} position={[0, 0, -8]} />
+      <SequenceLengthWall ref={wallRef} position={[0, 1, -12]} />
+
+      {/* Visuals */}
+      <VisualEffects />
+      <Stats />
+      {/* Controls */}
+      <OrbitControls />
     </>
   )
 }
+
+const GameScene: FC = () => (
+  <Canvas camera={{ position: [0, 2, 5], fov: 60 }} style={{ height: '100vh' }}>
+    <SceneContent />
+  </Canvas>
+)
 
 export default GameScene
