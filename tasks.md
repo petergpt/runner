@@ -115,7 +115,7 @@ request conflicts.
     - Spawn obstacles and tokens procedurally along each track chunk.
     - Remove or deactivate items once they pass the player.
 
-15. **HUD Improvements**
+15. **HUD Improvements** ✅ *Complete*
     - Display token progress as `token_count / 8192` per spec.
     - Show a win screen when the counter reaches 8192 tokens.
 
