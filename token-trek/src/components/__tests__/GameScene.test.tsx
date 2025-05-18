@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest'
-import React from 'react'
 import { createRoot } from '@react-three/fiber'
 import type { WebGLRenderer } from 'three'
 
@@ -30,7 +29,7 @@ const fakeRenderer = {
   setSize() {},
   setPixelRatio() {},
   domElement: makeCanvas(),
-  shadowMap: {} as any,
+  shadowMap: {} as unknown as WebGLRenderer['shadowMap'],
   xr: {
     enabled: false,
     isPresenting: false,
@@ -51,7 +50,10 @@ describe('GameScene', () => {
     const root = createRoot(canvas)
 
     // React-Three-Fiber v8: `configure` lets us inject the stub renderer.
-    root.configure({ gl: fakeRenderer, size: { width: 1, height: 1 } })
+    root.configure({
+      gl: fakeRenderer,
+      size: { width: 1, height: 1, top: 0, left: 0 },
+    })
 
     // Lazy import to avoid pulling in the whole scene up-front.
     const { default: GameScene } = await import('../GameScene')

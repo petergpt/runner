@@ -26,8 +26,8 @@ const Obstacle = forwardRef<Mesh, MeshProps>(({ id: _discard, ...props }, ref) =
 
   useFrame((_, dt) => {
     if (isGameOver || isGameWon) return
-    meshRef.current.position.z -= SPEED * dt
-    if (meshRef.current.position.z < -5) reset()
+    meshRef.current.position.z += SPEED * dt
+    if (meshRef.current.position.z > 5) reset()
   })
 
   return (

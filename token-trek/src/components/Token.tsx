@@ -38,15 +38,15 @@ const Token: FC<MeshProps> = ({ id: _discard, ...props }) => {
     if (isGameOver || isGameWon) return
     const mesh = meshRef.current
     mesh.rotation.y += delta * 2
-    mesh.position.z -= (ragPortalActive ? SPEED * 1.5 : SPEED) * delta
-    if (mesh.position.z < -5) {
+    mesh.position.z += (ragPortalActive ? SPEED * 1.5 : SPEED) * delta
+    if (mesh.position.z > 5) {
       resetToken()
       return
     }
     const offset = ragPortalActive ? BONUS_OFFSET : 0
     if (
-      mesh.position.z <= 0 &&
-      mesh.position.z > -1 &&
+      mesh.position.z >= 0 &&
+      mesh.position.z < 1 &&
       Math.abs(mesh.position.x - (lanes[lane] + offset)) < 0.1
     ) {
       collectToken()

@@ -43,8 +43,8 @@ const SequenceLengthWall: FC<Props> = ({ id: _discard, appearAfter = 30, ...prop
     if (!mesh) return
     const elapsed = clock.getElapsedTime() - startTime.current
     if (elapsed >= appearAfter) mesh.visible = true
-    mesh.position.z -= SPEED * dt
-    if (mesh.position.z < -5) reset(clock.getElapsedTime())
+    mesh.position.z += SPEED * dt
+    if (mesh.position.z > 5) reset(clock.getElapsedTime())
   })
 
   return (
