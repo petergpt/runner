@@ -2,6 +2,7 @@
 import type { FC } from 'react'
 import { useEffect, useRef } from 'react'
 import { useThree, useFrame } from '@react-three/fiber'
+import { useGameStore } from '../store/gameStore'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js'
@@ -9,6 +10,8 @@ import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js'
 const VisualEffects: FC = () => {
   const composer = useRef<EffectComposer | null>(null)
   const { scene, camera, gl, size } = useThree()
+  const lastDamage = useGameStore((s) => s.lastDamageTime)
+  const shake = useRef(0)
 
   useEffect(() => {
     try {
@@ -27,6 +30,11 @@ const VisualEffects: FC = () => {
     }
   }, [scene, camera, gl])
 
+  /* Camera shake on damage */
+  useEffect(() => {
+    shake.current = 0.3
+  }, [lastDamage])
+
   useEffect(() => {
     try {
       composer.current?.setSize(size.width, size.height)
@@ -35,7 +43,13 @@ const VisualEffects: FC = () => {
     }
   }, [size])
 
-  useFrame(() => {
+  useFrame((_, dt) => {
+    if (shake.current > 0) {
+      camera.position.x = (Math.random() - 0.5) * shake.current
+      camera.position.y = 2 + (Math.random() - 0.5) * shake.current
+      shake.current -= dt
+      if (shake.current <= 0) camera.position.set(0, 2, 5)
+    }
     try {
       composer.current?.render()
     } catch (err) {
