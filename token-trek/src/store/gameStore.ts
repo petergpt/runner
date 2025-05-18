@@ -64,7 +64,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       }
     }),
 
-  /* ── power-ups ───────────────────────────────────────────────────── */
+  /* ── power-ups ──────────────────────────────────────────────────── */
   systemPromptActive: false,
   activateSystemPrompt: () => {
     playPowerup()
@@ -74,7 +74,6 @@ export const useGameStore = create<GameState>((set, get) => ({
     }, 3000)
     set({ systemPromptTimeoutId: id })
   },
-  systemPromptTimeoutId: undefined,
 
   ragPortalActive: false,
   activateRagPortal: () => {
@@ -85,7 +84,6 @@ export const useGameStore = create<GameState>((set, get) => ({
     }, 3000)
     set({ ragPortalTimeoutId: id })
   },
-  ragPortalTimeoutId: undefined,
 
   clearPowerUpTimers: () => {
     const { systemPromptTimeoutId, ragPortalTimeoutId } = get()
@@ -99,7 +97,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     })
   },
 
-  /* ── tokens / scoring ────────────────────────────────────────────── */
+  /* ── tokens / scoring ───────────────────────────────────────────── */
   tokenCount: 0,
   multiplier: 1,
   startTime: performance.now(),
@@ -118,11 +116,15 @@ export const useGameStore = create<GameState>((set, get) => ({
     return elapsed > 0 ? get().tokenCount / elapsed : 0
   },
 
-  trackSpeed: 10,
+  /* ── track progression ─────────────────────────────────────────── */
+  trackSpeed: 10, // Higher default for snappier early gameplay
   increaseTrackSpeed: (amount) =>
-    set((state) => ({ trackSpeed: state.trackSpeed + amount })),
+    set((state) => ({
+      trackSpeed: state.trackSpeed + amount,
+      // You might tie future difficulty scaling to state.multiplier here
+    })),
 
-  /* ── meta & reset ───────────────────────────────────────────────── */
+  /* ── meta & reset ──────────────────────────────────────────────── */
   highScore:
     typeof window === 'undefined'
       ? 0
