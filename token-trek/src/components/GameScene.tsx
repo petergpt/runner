@@ -35,7 +35,10 @@ const SceneContent: FC = () => {
   const CHUNK_COUNT = 6
   const [chunks, setChunks] = useState<ChunkData[]>(() => {
     const arr: ChunkData[] = []
-    for (let i = 0; i < CHUNK_COUNT; i++) arr.push(chunkGen.current.next().value)
+    for (let i = 0; i < CHUNK_COUNT; i++) {
+      const chunk = chunkGen.current.next().value
+      arr.push({ ...chunk, startZ: -(chunk.startZ + chunk.length) })
+    }
     return arr
   })
   const chunkRefs = useRef<(Group | null)[]>([])
@@ -63,25 +66,25 @@ const SceneContent: FC = () => {
 
     /* scroll chunks towards player */
     chunkRefs.current.forEach((g) => {
-      if (g) g.position.z -= 5 * dt
+      if (g) g.position.z += 5 * dt
     })
 
     /* recycle first chunk when it’s far behind */
     const firstRef = chunkRefs.current[0]
     const firstChunk = chunks[0]
-    if (firstRef && firstChunk && firstRef.position.z + firstChunk.length < -20) {
+    if (firstRef && firstChunk && firstRef.position.z - firstChunk.length > 20) {
       const lastRef = chunkRefs.current[chunkRefs.current.length - 1]
       const lastChunk = chunks[chunks.length - 1]
 
       /* next procedural chunk */
       const next = chunkGen.current.next().value
-      const newZ = (lastRef?.position.z ?? 0) + (lastChunk?.length ?? 0)
+      const newZ = (lastRef?.position.z ?? 0) - (lastChunk?.length ?? 0)
 
       /* move the recycled mesh & update arrays */
       firstRef.position.set(0, 0, newZ)
       next.startZ = newZ
       chunkRefs.current = [...chunkRefs.current.slice(1), firstRef]
-      setChunks((prev) => [...prev.slice(1), next])
+      setChunks((prev) => [...prev.slice(1), { ...next, startZ: newZ }])
     }
   })
 

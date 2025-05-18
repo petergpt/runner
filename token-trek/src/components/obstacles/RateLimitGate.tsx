@@ -37,8 +37,8 @@ const RateLimitGate: FC<GroupProps> = ({ id: _discard, ...props }) => {
     leftRef.current.position.x = -1 - offset
     rightRef.current.position.x = 1 + offset
     if (groupRef.current) {
-      groupRef.current.position.z -= SPEED * dt
-      if (groupRef.current.position.z < -5) reset()
+      groupRef.current.position.z += SPEED * dt
+      if (groupRef.current.position.z > 5) reset()
     }
   })
   return (

@@ -17,7 +17,9 @@ export const useTrackStore = create<TrackState>(() => {
       const chunk = gen.next().value
       const laneIndex = lane ?? Math.floor(Math.random() * chunk.lanes.length)
       const x = chunk.lanes[laneIndex]
-      const z = chunk.startZ + Math.random() * chunk.length
+      const z = -(
+        chunk.startZ + Math.random() * chunk.length
+      )
       return { x, z }
     },
   }

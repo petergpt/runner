@@ -41,8 +41,8 @@ const PromptInjectionCube: FC<MeshProps> = ({ id: _discard, ...props }) => {
     if (!mesh) return
     mesh.rotation.x += delta
     mesh.rotation.y += delta
-    mesh.position.z -= SPEED * delta
-    if (mesh.position.z < -5) reset()
+    mesh.position.z += SPEED * delta
+    if (mesh.position.z > 5) reset()
   })
 
   return (
