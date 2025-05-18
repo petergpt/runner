@@ -24,9 +24,11 @@ const StartMenu: FC<Props> = ({ onStart }) => {
       <button onClick={onStart}>Start</button>
       <div style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
         Use A/D or ←/→ to switch lanes, Space to jump.<br />
-        Collect <span style={{ color: 'cyan' }}>cyan tokens</span> and avoid
-        <span style={{ color: 'red' }}> red cubes</span> &amp; gates.<br />
-        The blue portal sends you to a bonus lane for extra tokens.
+        Collect <span style={{ color: 'cyan' }}>cyan spheres</span> for points
+        and avoid <span style={{ color: 'red' }}>red cubes</span> or
+        <span style={{ color: 'orange' }}> orange gates</span>.<br />
+        <span style={{ color: 'yellow' }}>Yellow icosahedrons</span> clear
+        obstacles briefly. The blue portal leads to a bonus lane.
       </div>
     </div>
   )
