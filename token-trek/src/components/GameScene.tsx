@@ -72,9 +72,10 @@ const SceneContent: FC = () => {
       if (lastRef && lastChunk) {
         const next = chunkGen.current.next().value
         const newZ = lastRef.position.z + lastChunk.length
-        firstRef.position.z = newZ
         next.startZ = newZ
-        chunkRefs.current = [...chunkRefs.current.slice(1), firstRef]
+        chunkRefs.current = [...chunkRefs.current.slice(1)]
+        firstRef.position.set(0, 0, newZ)
+        chunkRefs.current.push(firstRef)
         setChunks((prev) => [...prev.slice(1), next])
       }
     }
