@@ -25,9 +25,9 @@ import { useGameStore } from '../store/gameStore'
 
 const SceneContent: FC = () => {
   /* obstacle references for collision */
-  const GENERIC_COUNT = 3
-  const CUBE_COUNT = 2
-  const GATE_COUNT = 2
+  const GENERIC_COUNT = 6
+  const CUBE_COUNT = 4
+  const GATE_COUNT = 3
   const genericRefs = useRef([...Array(GENERIC_COUNT)].map(() => createRef<Mesh>()))
   const cubeRefs = useRef([...Array(CUBE_COUNT)].map(() => createRef<Mesh>()))
   const gateRefs = useRef([...Array(GATE_COUNT)].map(() => createRef<Mesh>()))
@@ -62,11 +62,11 @@ const SceneContent: FC = () => {
   useFrame(({ clock }, dt) => {
     if (isGameOver || isGameWon) return
 
-    /* 15-s summarization checkpoint */
+    /* 10‑s summarization checkpoint */
     const elapsed = clock.getElapsedTime()
-    if (elapsed - checkpointRef.current >= 15) {
+    if (elapsed - checkpointRef.current >= 10) {
       shrinkMaxHealth(10)
-      increaseTrackSpeed(0.5)
+      increaseTrackSpeed(1)
       checkpointRef.current = elapsed
     }
 
@@ -125,36 +125,36 @@ const SceneContent: FC = () => {
         ]}
       />
 
-      {/* Collectibles & power-ups */}
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Token key={`t${i}`} position={[0, 0.5, -3]} />
+      {/* Collectibles & power‑ups */}
+      {Array.from({ length: 15 }).map((_, i) => (
+        <Token key={`t${i}`} position={[0, 0.5, -50]} />
       ))}
-      <SystemPromptPowerUp position={[0, 0.5, -6]} />
-      <RAGPortal position={[0, 0.5, -9]} />
+      <SystemPromptPowerUp position={[0, 0.5, -50]} />
+      <RAGPortal position={[0, 0.5, -50]} />
 
       {/* Obstacles */}
       {Array.from({ length: GENERIC_COUNT }).map((_, i) => (
         <Obstacle
-          key={`o${i}`}
+          key={`o${i}`]
           ref={genericRefs.current[i]}
-          position={[0, 0.5, -2]}
+          position={[0, 0.5, -50]}
         />
       ))}
       {Array.from({ length: CUBE_COUNT }).map((_, i) => (
         <PromptInjectionCube
-          key={`c${i}`}
+          key={`c${i}`]
           ref={cubeRefs.current[i]}
-          position={[0, 0.5, -5]}
+          position={[0, 0.5, -50]}
         />
       ))}
       {Array.from({ length: GATE_COUNT }).map((_, i) => (
         <RateLimitGate
-          key={`g${i}`}
+          key={`g${i}`]
           ref={gateRefs.current[i]}
-          position={[0, 0, -8]}
+          position={[0, 0, -50]}
         />
       ))}
-      <SequenceLengthWall ref={wallRef} position={[0, 1, -12]} />
+      <SequenceLengthWall ref={wallRef} position={[0, 1, -50]} appearAfter={15} />
 
       {/* Effects & HUD */}
       <VisualEffects />
