@@ -2,8 +2,8 @@ import type { FC, RefObject, MutableRefObject } from 'react'
 import { useEffect, useRef } from 'react'
 import type { ThreeElements } from '@react-three/fiber'
 import { useFrame } from '@react-three/fiber'
-import type { Mesh, Box3 } from 'three'
-import { Box3 as ThreeBox3 } from 'three'
+import type { Mesh, Box3, MeshStandardMaterial } from 'three'
+import { Box3 as ThreeBox3, MathUtils } from 'three'
 
 import { contextWindowClamp } from '../game/contextWindowClamp'
 import { useGameStore }   from '../store/gameStore'
@@ -14,6 +14,7 @@ const BONUS_OFFSET  = 4
 const JUMP_VELOCITY = 8
 const GRAVITY       = -20
 const FLOOR_Y       = 0.5
+const LANES         = [-LANE_WIDTH, 0, LANE_WIDTH]
 
 interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
 type PlayerProps = MeshProps & {
@@ -34,6 +35,7 @@ const Player: FC<PlayerProps> = ({
 }) => {
   void _discard
   const meshRef   = useRef<Mesh>(null!)
+  const materialRef = useRef<MeshStandardMaterial>(null!)
   const velocityY = useRef(0)
   const jumping   = useRef(false)
   const internalCollided = useRef<Set<Mesh>>(new Set())
@@ -50,14 +52,16 @@ const Player: FC<PlayerProps> = ({
   const isGameOver  = useGameStore((s) => s.isGameOver)
   const isGameWon   = useGameStore((s) => s.isGameWon)
   const ragPortalActive = useGameStore((s) => s.ragPortalActive)
+  const lastDamage  = useGameStore((s) => s.lastDamageTime)
+  const lastToken   = useGameStore((s) => s.lastTokenTime)
 
   /* Keyboard controls */
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.code === 'KeyA' || e.code === 'ArrowLeft')
-        setLane(contextWindowClamp(lane - 1))
+        setLane((l) => contextWindowClamp(l - 1))
       else if (e.code === 'KeyD' || e.code === 'ArrowRight')
-        setLane(contextWindowClamp(lane + 1))
+        setLane((l) => contextWindowClamp(l + 1))
       else if (e.code === 'Space' && !jumping.current) {
         jumping.current  = true
         velocityY.current = JUMP_VELOCITY
@@ -65,7 +69,23 @@ const Player: FC<PlayerProps> = ({
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [lane, setLane])
+  }, [setLane])
+
+  /* Visual feedback on damage */
+  useEffect(() => {
+    if (!materialRef.current || !lastDamage) return
+    materialRef.current.color.set('red')
+    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
+    return () => clearTimeout(id)
+  }, [lastDamage])
+
+  /* Visual feedback on token */
+  useEffect(() => {
+    if (!materialRef.current || !lastToken) return
+    materialRef.current.color.set('cyan')
+    const id = setTimeout(() => materialRef.current?.color.set('hotpink'), 200)
+    return () => clearTimeout(id)
+  }, [lastToken])
 
   /* Per-frame logic */
   useFrame((_, dt) => {
@@ -73,7 +93,8 @@ const Player: FC<PlayerProps> = ({
 
     const mesh = meshRef.current
     const offset = ragPortalActive ? BONUS_OFFSET : 0
-    mesh.position.x = (-1 + lane) * LANE_WIDTH + offset // snap to lane or bonus
+    const targetX = LANES[lane] + offset
+    mesh.position.x = MathUtils.damp(mesh.position.x, targetX, 10, dt)
 
     /* jump / gravity */
     if (jumping.current) {
@@ -102,7 +123,7 @@ const Player: FC<PlayerProps> = ({
   return (
     <mesh ref={meshRef} {...props} position={[0, FLOOR_Y, 0]}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="hotpink" />
+      <meshStandardMaterial ref={materialRef} color="hotpink" />
     </mesh>
   )
 }
