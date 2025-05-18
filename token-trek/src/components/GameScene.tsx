@@ -86,7 +86,7 @@ const SceneContent: FC = () => {
       <NeonGrid />
       {chunks.map((chunk, i) => (
         <TrackChunk
-          key={i}
+          key={chunk.id}
           ref={(el) => {
             if (el) chunkRefs.current[i] = el
           }}
