@@ -135,7 +135,7 @@ request conflicts.
     - Clear any `setTimeout` timers when components unmount.
     - Add React error boundaries around the game scene to surface issues.
 
-20. **Stabilize GameScene**
+20. **Stabilize GameScene** ✅ *Complete*
     - Investigate the runtime error "Cannot assign to read only property 'id'" that crashes the Canvas.
     - Ensure components do not forward an `id` prop to three.js objects and remove any accidental mutations.
     - Verify the scene no longer triggers the "Hooks can only be used within the Canvas component" warning.

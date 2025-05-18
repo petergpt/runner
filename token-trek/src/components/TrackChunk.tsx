@@ -4,10 +4,12 @@ import type { ThreeElements } from '@react-three/fiber'
 
 import type { TrackChunk as ChunkData } from '../game/trackChunkGenerator'
 
-type Props = ThreeElements['group'] & Omit<ChunkData, 'id'>
+interface GroupProps extends Omit<ThreeElements['group'], 'id'> { id?: never }
+type Props = GroupProps & Omit<ChunkData, 'id'>
 
 const TrackChunk = forwardRef<Group, Props>(
-  ({ lanes, length, startZ, ...props }, ref) => {
+  ({ id: _discard, lanes, length, startZ, ...props }, ref) => {
+    void _discard
     const laneWidth = Math.abs(lanes[1] - lanes[0])
     return (
       <group ref={ref} position={[0, 0, startZ]} {...props}>

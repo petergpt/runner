@@ -15,11 +15,13 @@ const JUMP_VELOCITY = 8
 const GRAVITY       = -20
 const FLOOR_Y       = 0.5
 
-type PlayerProps = ThreeElements['mesh'] & {
+interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
+type PlayerProps = MeshProps & {
   obstacles?: RefObject<Mesh>[]
 }
 
-const Player: FC<PlayerProps> = ({ obstacles = [], ...props }) => {
+const Player: FC<PlayerProps> = ({ id: _discard, obstacles = [], ...props }) => {
+  void _discard
   const meshRef        = useRef<Mesh>(null!)
   const velocityY      = useRef(0)
   const jumping        = useRef(false)

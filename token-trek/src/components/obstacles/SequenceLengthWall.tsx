@@ -9,7 +9,7 @@ import { useTrackStore } from '../../store/trackStore'
 /**
  * A wall that appears after a delay, forcing the player to jump.
  */
-type MeshProps = ThreeElements['mesh']
+interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
 
 interface Props extends MeshProps {
   appearAfter?: number
@@ -17,7 +17,8 @@ interface Props extends MeshProps {
 
 const SPEED = 5
 
-const SequenceLengthWall: FC<Props> = ({ appearAfter = 30, ...props }) => {
+const SequenceLengthWall: FC<Props> = ({ id: _discard, appearAfter = 30, ...props }) => {
+  void _discard
   const meshRef = useRef<Mesh>(null!)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
