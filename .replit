@@ -1,0 +1,8 @@
+modules = ["nodejs-20", "bash", "web"]
+run = 'bash -c "cd token-trek \   && pnpm install --frozen-lockfile \   && pnpm run dev -- --host 0.0.0.0 --port $PORT"'
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", 'bash -c "cd token-trek \   && pnpm install --frozen-lockfile \   && pnpm run dev -- --host 0.0.0.0 --port $PORT"']
