@@ -1,15 +1,11 @@
 import { create } from 'zustand'
+import { playToken, playCollision, playPowerup } from '../utils/sfx'
 
 /** AGI milestone – reaching this many tokens wins the game */
 export const AGI_GOAL = 8192
 
-/**
- * Global game-state store (Zustand)
- * – health / game-over logic
- * – token counter + score multiplier
- */
 interface GameState {
-  /* Health & fail state */
+  /* Health & fail/win state */
   health: number
   maxHealth: number
   isGameOver: boolean
@@ -18,7 +14,7 @@ interface GameState {
   resetHealth: () => void
   shrinkMaxHealth: (amount: number) => void
 
-  /* Power-up state */
+  /* Power-ups */
   systemPromptActive: boolean
   activateSystemPrompt: () => void
   systemPromptTimeoutId?: ReturnType<typeof setTimeout>
@@ -27,7 +23,7 @@ interface GameState {
   ragPortalTimeoutId?: ReturnType<typeof setTimeout>
   clearPowerUpTimers: () => void
 
-  /* Token / score system */
+  /* Tokens / scoring */
   tokenCount: number
   multiplier: number
   startTime: number
@@ -40,19 +36,20 @@ interface GameState {
 }
 
 export const useGameStore = create<GameState>((set, get) => ({
-  /* ── health subsystem ─────────────────────────────────────────────── */
+  /* ── health ─────────────────────────────────────────────────────── */
   health: 100,
   maxHealth: 100,
   isGameOver: false,
   isGameWon: false,
-  reduceHealth: (amount: number) =>
+  reduceHealth: (amount) =>
     set((state) => {
       const nextHealth = Math.max(state.health - amount, 0)
+      playCollision()
       return { health: nextHealth, isGameOver: nextHealth <= 0 }
     }),
   resetHealth: () =>
     set({ health: 100, maxHealth: 100, isGameOver: false, isGameWon: false }),
-  shrinkMaxHealth: (amount: number) =>
+  shrinkMaxHealth: (amount) =>
     set((state) => {
       const newMax = Math.max(state.maxHealth - amount, 0)
       const newHealth = Math.min(state.health, newMax)
@@ -66,6 +63,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   /* ── power-ups ───────────────────────────────────────────────────── */
   systemPromptActive: false,
   activateSystemPrompt: () => {
+    playPowerup()
     set({ systemPromptActive: true })
     const id = setTimeout(() => {
       set({ systemPromptActive: false, systemPromptTimeoutId: undefined })
@@ -73,8 +71,10 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({ systemPromptTimeoutId: id })
   },
   systemPromptTimeoutId: undefined,
+
   ragPortalActive: false,
   activateRagPortal: () => {
+    playPowerup()
     set({ ragPortalActive: true })
     const id = setTimeout(() => {
       set({ ragPortalActive: false, ragPortalTimeoutId: undefined })
@@ -82,14 +82,11 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({ ragPortalTimeoutId: id })
   },
   ragPortalTimeoutId: undefined,
+
   clearPowerUpTimers: () => {
     const { systemPromptTimeoutId, ragPortalTimeoutId } = get()
-    if (systemPromptTimeoutId) {
-      clearTimeout(systemPromptTimeoutId)
-    }
-    if (ragPortalTimeoutId) {
-      clearTimeout(ragPortalTimeoutId)
-    }
+    if (systemPromptTimeoutId) clearTimeout(systemPromptTimeoutId)
+    if (ragPortalTimeoutId)    clearTimeout(ragPortalTimeoutId)
     set({
       systemPromptTimeoutId: undefined,
       ragPortalTimeoutId: undefined,
@@ -98,13 +95,14 @@ export const useGameStore = create<GameState>((set, get) => ({
     })
   },
 
-  /* ── token / scoring subsystem ─────────────────────────────────────── */
+  /* ── tokens / scoring ────────────────────────────────────────────── */
   tokenCount: 0,
   multiplier: 1,
   startTime: performance.now(),
   collectToken: () =>
     set((state) => {
       const tokenCount = state.tokenCount + state.multiplier
+      playToken()
       return {
         tokenCount,
         multiplier: state.multiplier + 1,
@@ -116,11 +114,12 @@ export const useGameStore = create<GameState>((set, get) => ({
     return elapsed > 0 ? get().tokenCount / elapsed : 0
   },
 
-  /* ── meta ─────────────────────────────────────────────────────────── */
+  /* ── meta & reset ───────────────────────────────────────────────── */
   highScore:
     typeof window === 'undefined'
       ? 0
       : Number(window.localStorage.getItem('highScore')) || 0,
+
   resetGame: () => {
     get().clearPowerUpTimers()
     set((state) => {
@@ -128,6 +127,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         state.tokenCount > state.highScore ? state.tokenCount : state.highScore
       if (typeof window !== 'undefined')
         window.localStorage.setItem('highScore', String(highScore))
+
       return {
         health: 100,
         maxHealth: 100,

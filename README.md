@@ -68,6 +68,12 @@ pnpm format         # Prettier
 ## Tech stack
 
 Note that if you need some game assets that can be added by the user, e.g. images or music, please specify this, leave placeholders and instruct the user.
+
+### Custom Audio
+
+Placeholders for sound effects live in `token-trek/public/audio`. Replace
+`token.mp3`, `collision.mp3` and `powerup.mp3` with your own clips to hear them
+in game.
 ---
 ````
 

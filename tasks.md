@@ -127,7 +127,7 @@ request conflicts.
     - Add a start menu and allow restarting after game over or win.
     - Store the best token count in `localStorage` as a high score.
 
-18. **Audio & Feedback**
+18. **Audio & Feedback** ✅ *Complete*
     - Provide placeholders for sound effects on token collect, collisions and power-ups.
     - Document where users can drop custom audio files.
 
