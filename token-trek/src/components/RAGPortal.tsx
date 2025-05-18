@@ -1,11 +1,12 @@
 import type { FC } from 'react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import { useFrame } from '@react-three/fiber'
 import type { ThreeElements } from '@react-three/fiber'
 import type { Mesh } from 'three'
 
 import { usePlayerStore } from '../store/playerStore'
 import { useGameStore } from '../store/gameStore'
+import { useTrackStore } from '../store/trackStore'
 
 const LANE_WIDTH = 2
 const SPEED = 5
@@ -18,17 +19,17 @@ const RAGPortal: FC<ThreeElements['mesh']> = (props) => {
   const activate = useGameStore((s) => s.activateRagPortal)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const nextPosition = useTrackStore((s) => s.nextPosition)
 
-  const reset = () => {
+  const reset = useCallback(() => {
     if (!meshRef.current) return
-    meshRef.current.position.z = 30 + Math.random() * 10
-    const laneIndex = Math.floor(Math.random() * 3)
-    meshRef.current.position.x = lanes[laneIndex]
-  }
+    const { x, z } = nextPosition()
+    meshRef.current.position.set(x, 0.5, z)
+  }, [nextPosition])
 
   useEffect(() => {
     reset()
-  }, [])
+  }, [reset])
 
   useFrame((_, dt) => {
     if (isGameOver || isGameWon) return
