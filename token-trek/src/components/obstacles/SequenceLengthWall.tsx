@@ -15,13 +15,14 @@ interface Props extends MeshProps {
   appearAfter?: number
 }
 
-const SPEED = 5
+
 
 const SequenceLengthWall: FC<Props> = ({ id: _discard, appearAfter = 30, ...props }) => {
   void _discard
   const meshRef = useRef<Mesh>(null!)
   const isGameOver = useGameStore((s) => s.isGameOver)
   const isGameWon = useGameStore((s) => s.isGameWon)
+  const trackSpeed = useGameStore((s) => s.trackSpeed)
   const nextPosition = useTrackStore((s) => s.nextPosition)
   const startTime = useRef<number>(0)
 
@@ -43,7 +44,7 @@ const SequenceLengthWall: FC<Props> = ({ id: _discard, appearAfter = 30, ...prop
     if (!mesh) return
     const elapsed = clock.getElapsedTime() - startTime.current
     if (elapsed >= appearAfter) mesh.visible = true
-    mesh.position.z += SPEED * dt
+    mesh.position.z += trackSpeed * dt
     if (mesh.position.z > 5) reset(clock.getElapsedTime())
   })
 

@@ -25,3 +25,21 @@
   gap: 2px;
 }
 
+.flashDamage {
+  animation: flash-red 0.2s;
+}
+
+.flashToken {
+  animation: flash-cyan 0.2s;
+}
+
+@keyframes flash-red {
+  from { background-color: rgba(255, 0, 0, 0.3); }
+  to   { background-color: transparent; }
+}
+
+@keyframes flash-cyan {
+  from { background-color: rgba(0, 255, 255, 0.3); }
+  to   { background-color: transparent; }
+}
+
