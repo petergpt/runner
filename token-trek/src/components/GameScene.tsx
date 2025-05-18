@@ -99,7 +99,9 @@ const SceneContent: FC = () => {
           ref={(el) => {
             if (el) chunkRefs.current[i] = el
           }}
-          {...chunk}
+          lanes={chunk.lanes}
+          length={chunk.length}
+          startZ={chunk.startZ}
         />
       ))}
 
