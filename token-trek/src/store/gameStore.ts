@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { playToken, playCollision, playPowerup } from '../utils/sfx'
 
 /** AGI milestone – reaching this many tokens wins the game */
 export const AGI_GOAL = 8192
@@ -45,6 +46,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   reduceHealth: (amount: number) =>
     set((state) => {
       const nextHealth = Math.max(state.health - amount, 0)
+      playCollision()
       return { health: nextHealth, isGameOver: nextHealth <= 0 }
     }),
   resetHealth: () =>
@@ -64,11 +66,13 @@ export const useGameStore = create<GameState>((set, get) => ({
   systemPromptActive: false,
   activateSystemPrompt: () => {
     set({ systemPromptActive: true })
+    playPowerup()
     setTimeout(() => set({ systemPromptActive: false }), 3000)
   },
   ragPortalActive: false,
   activateRagPortal: () => {
     set({ ragPortalActive: true })
+    playPowerup()
     setTimeout(() => set({ ragPortalActive: false }), 3000)
   },
 
@@ -79,6 +83,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   collectToken: () =>
     set((state) => {
       const tokenCount = state.tokenCount + state.multiplier
+      playToken()
       return {
         tokenCount,
         multiplier: state.multiplier + 1,
