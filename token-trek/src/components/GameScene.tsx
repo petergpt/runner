@@ -61,17 +61,17 @@ const SceneContent: FC = () => {
     }
 
     chunkRefs.current.forEach((g) => {
-      g.position.z -= 5 * dt
+      if (g) g.position.z -= 5 * dt
     })
 
     const firstRef = chunkRefs.current[0]
     const firstChunk = chunks[0]
-    if (firstRef && firstRef.position.z + firstChunk.length < -20) {
+    if (firstRef && firstChunk && firstRef.position.z + firstChunk.length < -20) {
       const lastRef = chunkRefs.current[chunkRefs.current.length - 1]
       const lastChunk = chunks[chunks.length - 1]
       const next = chunkGen.current.next().value
-      const newZ = lastRef.position.z + lastChunk.length
-      firstRef.position.z = newZ
+      const newZ = (lastRef?.position.z ?? 0) + (lastChunk?.length ?? 0)
+      if (firstRef) firstRef.position.z = newZ
       next.startZ = newZ
       chunkRefs.current.push(chunkRefs.current.shift()!)
       setChunks((prev) => [...prev.slice(1), next])
