@@ -12,7 +12,9 @@ const SPEED = 5
 const lanes = [-LANE_WIDTH, 0, LANE_WIDTH]
 const BONUS_OFFSET = 4
 
-const Token: FC<ThreeElements['mesh']> = (props) => {
+interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
+const Token: FC<MeshProps> = ({ id: _discard, ...props }) => {
+  void _discard
   const meshRef = useRef<Mesh>(null!)
   const lane = usePlayerStore((s) => s.lane)
   const collectToken = useGameStore((s) => s.collectToken)

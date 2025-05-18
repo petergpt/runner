@@ -11,7 +11,9 @@ import { useTrackStore } from '../../store/trackStore'
  */
 const SPEED = 5
 
-const RateLimitGate: FC<ThreeElements['group']> = (props) => {
+interface GroupProps extends Omit<ThreeElements['group'], 'id'> { id?: never }
+const RateLimitGate: FC<GroupProps> = ({ id: _discard, ...props }) => {
+  void _discard
   const leftRef = useRef<Mesh>(null!)
   const rightRef = useRef<Mesh>(null!)
   const groupRef = useRef<Mesh>(null!)

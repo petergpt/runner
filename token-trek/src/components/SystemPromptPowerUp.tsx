@@ -12,7 +12,9 @@ const LANE_WIDTH = 2
 const SPEED = 5
 const lanes = [-LANE_WIDTH, 0, LANE_WIDTH]
 
-const SystemPromptPowerUp: FC<ThreeElements['mesh']> = (props) => {
+interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
+const SystemPromptPowerUp: FC<MeshProps> = ({ id: _discard, ...props }) => {
+  void _discard
   const meshRef = useRef<Mesh>(null!)
   const lane = usePlayerStore((s) => s.lane)
   const activate = useGameStore((s) => s.activateSystemPrompt)

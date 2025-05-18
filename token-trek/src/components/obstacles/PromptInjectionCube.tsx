@@ -12,7 +12,9 @@ import { useTrackStore } from '../../store/trackStore'
  */
 const SPEED = 5
 
-const PromptInjectionCube: FC<ThreeElements['mesh']> = (props) => {
+interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
+const PromptInjectionCube: FC<MeshProps> = ({ id: _discard, ...props }) => {
+  void _discard
   const meshRef = useRef<Mesh>(null!)
   const active = useGameStore((s) => s.systemPromptActive)
   const isGameOver = useGameStore((s) => s.isGameOver)

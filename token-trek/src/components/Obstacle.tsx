@@ -7,7 +7,9 @@ import { useGameStore } from '../store/gameStore'
 
 const SPEED = 5
 
-const Obstacle = forwardRef<Mesh, ThreeElements['mesh']>((props, ref) => {
+interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
+const Obstacle = forwardRef<Mesh, MeshProps>(({ id: _discard, ...props }, ref) => {
+  void _discard
   const meshRef = useRef<Mesh>(null!)
   const nextPosition = useTrackStore((s) => s.nextPosition)
   const isGameOver = useGameStore((s) => s.isGameOver)
