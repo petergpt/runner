@@ -11,6 +11,7 @@ import SystemPromptPowerUp from './SystemPromptPowerUp';
 import RAGPortal from './RAGPortal';
 import NeonGrid from './NeonGrid';
 import VisualEffects from './VisualEffects';
+import CameraShake from './CameraShake';
 import TrackChunk from './TrackChunk';
 import {
   trackChunkGenerator,
@@ -192,6 +193,7 @@ const SceneContent: FC = () => {
       />
 
       {/* Effects & HUD */}
+      <CameraShake />
       <VisualEffects />
       <Stats />
       <OrbitControls />

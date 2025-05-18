@@ -13,6 +13,12 @@ interface TrackState {
 export const useTrackStore = create<TrackState>(() => {
   const gen: Generator<TrackChunk> = trackChunkGenerator()
   const SPAWN_LIMIT = 100
+  /**
+   * Cursor used to place objects at regular intervals so spawning
+   * feels rhythmic instead of completely random.
+   */
+  let cursor = 0
+
   return {
     /**
      * Returns a lane-aligned position some distance ahead of the
@@ -24,9 +30,9 @@ export const useTrackStore = create<TrackState>(() => {
       const chunk = gen.next().value
       const laneIndex = lane ?? Math.floor(Math.random() * chunk.lanes.length)
       const x = chunk.lanes[laneIndex]
-      const z = -(
-        (chunk.startZ % SPAWN_LIMIT) + Math.random() * chunk.length
-      )
+      cursor += chunk.length / 2
+      if (cursor > SPAWN_LIMIT) cursor -= SPAWN_LIMIT
+      const z = -cursor
       return { x, z }
     },
   }

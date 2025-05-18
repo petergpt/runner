@@ -13,6 +13,8 @@ interface GameState {
   reduceHealth: (amount: number) => void
   resetHealth: () => void
   shrinkMaxHealth: (amount: number) => void
+  lastDamageTime: number
+  lastTokenTime: number
 
   /* Power-ups */
   systemPromptActive: boolean
@@ -45,11 +47,17 @@ export const useGameStore = create<GameState>((set, get) => ({
   maxHealth: 100,
   isGameOver: false,
   isGameWon: false,
+  lastDamageTime: 0,
+  lastTokenTime: 0,
   reduceHealth: (amount) =>
     set((state) => {
       const nextHealth = Math.max(state.health - amount, 0)
       playCollision()
-      return { health: nextHealth, isGameOver: nextHealth <= 0 }
+      return {
+        health: nextHealth,
+        isGameOver: nextHealth <= 0,
+        lastDamageTime: performance.now(),
+      }
     }),
   resetHealth: () =>
     set({ health: 100, maxHealth: 100, isGameOver: false, isGameWon: false }),
@@ -109,6 +117,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         tokenCount,
         multiplier: state.multiplier + 1,
         isGameWon: tokenCount >= AGI_GOAL,
+        lastTokenTime: performance.now(),
       }
     }),
   tokensPerSecond: () => {
@@ -145,6 +154,8 @@ export const useGameStore = create<GameState>((set, get) => ({
         isGameWon: false,
         systemPromptActive: false,
         ragPortalActive: false,
+        lastDamageTime: 0,
+        lastTokenTime: 0,
         tokenCount: 0,
         multiplier: 1,
         startTime: performance.now(),
