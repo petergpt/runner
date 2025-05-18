@@ -7,7 +7,8 @@ import type { TrackChunk as ChunkData } from '../game/trackChunkGenerator'
 type Props = ThreeElements['group'] & ChunkData
 
 const TrackChunk = forwardRef<Group, Props>(
-  ({ lanes, length, startZ, ...props }, ref) => {
+  ({ lanes, length, startZ, id, ...props }, ref) => {
+    void id
     const laneWidth = Math.abs(lanes[1] - lanes[0])
     return (
       <group ref={ref} position={[0, 0, startZ]} {...props}>
