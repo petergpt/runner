@@ -31,7 +31,7 @@ const SceneContent: FC = () => {
   const genericRefs = useRef([...Array(GENERIC_COUNT)].map(() => createRef<Mesh>()))
   const cubeRefs = useRef([...Array(CUBE_COUNT)].map(() => createRef<Mesh>()))
   const gateRefs = useRef([...Array(GATE_COUNT)].map(() => createRef<Mesh>()))
-  const wallRef = useRef<Mesh>(null!)
+  const wallRef = createRef<Mesh>()
 
   /* procedural track */
   const chunkGen = useRef(trackChunkGenerator())
@@ -115,15 +115,15 @@ const SceneContent: FC = () => {
       ))}
 
       {/* Player */}
-      <Player
-        position={[0, 0.5, 0]}
-        obstacles={[
-          ...genericRefs.current,
-          ...cubeRefs.current,
-          ...gateRefs.current,
-          wallRef,
-        ]}
-      />
+      {(() => {
+        const obstacleRefs: React.RefObject<Mesh>[] = [
+          ...(genericRefs.current as React.RefObject<Mesh>[]),
+          ...(cubeRefs.current as React.RefObject<Mesh>[]),
+          ...(gateRefs.current as React.RefObject<Mesh>[]),
+          wallRef as React.RefObject<Mesh>,
+        ]
+        return <Player position={[0, 0.5, 0]} obstacles={obstacleRefs} />
+      })()}
 
       {/* Collectibles & power‑ups */}
       {Array.from({ length: 15 }).map((_, i) => (
