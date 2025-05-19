@@ -1,3 +1,4 @@
+
 import type { FC } from 'react'
 import { useEffect, useRef, useCallback } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -11,9 +12,9 @@ import { useTrackStore } from '../store/trackStore'
 const LANE_WIDTH = 2
 const lanes = [-LANE_WIDTH, 0, LANE_WIDTH]
 
-interface MeshProps extends Omit<ThreeElements['mesh'], 'id'> { id?: never }
-const RAGPortal: FC<MeshProps> = ({ id: _discard, ...props }) => {
-  void _discard
+interface MeshProps extends ThreeElements['mesh'] {}
+
+const RAGPortal: FC<MeshProps> = (props) => {
   const meshRef = useRef<Mesh>(null!)
   const lane = usePlayerStore((s) => s.lane)
   const activate = useGameStore((s) => s.activateRagPortal)
