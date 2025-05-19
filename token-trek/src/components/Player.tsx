@@ -44,13 +44,23 @@ const Player: FC<PlayerProps> = ({
   const obstacleBox = useRef<Box3>(new ThreeBox3())
 
   /* --- global stores --- */
-  const lane = usePlayerStore((s) => s.lane)
-  const setLane = usePlayerStore((s) => s.setLane)
+  const playerState = usePlayerStore((s) => ({
+    lane: s.lane,
+    jump: s.jump,
+    isJumping: s.isJumping,
+    yVelocity: s.yVelocity,
+    position: s.position,
+    setYVelocity: s.setYVelocity,
+    setPosition: s.setPosition,
+    setIsJumping: s.setIsJumping
+  }))
+  const gameState = useGameStore((s) => ({
+    isGameOver: s.isGameOver,
+    isGameWon: s.isGameWon
+  }))
 
   const {
     reduceHealth,
-    isGameOver,
-    isGameWon,
     ragPortalActive,
     lastDamageTime,
     lastTokenTime,
@@ -76,11 +86,11 @@ const Player: FC<PlayerProps> = ({
       switch (e.code) {
         case 'KeyA':
         case 'ArrowLeft':
-          setLane((l) => contextWindowClamp(l - 1))
+          playerState.setIsJumping((l) => contextWindowClamp(l - 1))
           break
         case 'KeyD':
         case 'ArrowRight':
-          setLane((l) => contextWindowClamp(l + 1))
+          playerState.setIsJumping((l) => contextWindowClamp(l + 1))
           break
         case 'Space':
           if (!jumping.current) {
@@ -92,7 +102,7 @@ const Player: FC<PlayerProps> = ({
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [setLane])
+  }, [playerState.setIsJumping])
 
   /* --- visual feedback --- */
   useEffect(() => {
@@ -105,12 +115,12 @@ const Player: FC<PlayerProps> = ({
 
   /* --- per-frame logic --- */
   useFrame((_, dt) => {
-    if (isGameOver || isGameWon) return
+    if (gameState.isGameOver || gameState.isGameWon) return
 
     const mesh = meshRef.current
 
     /* side-to-side lane movement with bonus offset */
-    const targetX = LANES[lane] + (ragPortalActive ? BONUS_OFFSET : 0)
+    const targetX = LANES[playerState.lane] + (ragPortalActive ? BONUS_OFFSET : 0)
     mesh.position.x = MathUtils.damp(mesh.position.x, targetX, 10, dt)
 
     /* jumping / gravity */
