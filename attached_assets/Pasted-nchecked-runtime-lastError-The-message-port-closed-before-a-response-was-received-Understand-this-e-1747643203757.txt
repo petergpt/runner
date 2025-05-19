@@ -1,0 +1,221 @@
+nchecked runtime.lastError: The message port closed before a response was received.Understand this error
+The deferred DOM Node could not be resolved to a valid node.Understand this warning
+chunk-TPGJRR7W.js?v=e0bd2817:17987 Download the React DevTools for a better development experience: https://react.dev/link/react-devtools
+Player.tsx:57 The result of getSnapshot should be cached to avoid an infinite loop
+mountSyncExternalStore @ chunk-HOYDMXHX.js?v=e0bd2817:3617
+useSyncExternalStore @ chunk-HOYDMXHX.js?v=e0bd2817:10716
+exports.useSyncExternalStore @ chunk-PLUGHXRK.js?v=e0bd2817:930
+useStore @ chunk-JNT37C22.js?v=e0bd2817:15
+useBoundStore @ chunk-JNT37C22.js?v=e0bd2817:25
+Player @ Player.tsx:57
+react-stack-bottom-frame @ chunk-HOYDMXHX.js?v=e0bd2817:10487
+renderWithHooks @ chunk-HOYDMXHX.js?v=e0bd2817:3275
+updateFunctionComponent @ chunk-HOYDMXHX.js?v=e0bd2817:4853
+beginWork @ chunk-HOYDMXHX.js?v=e0bd2817:5862
+runWithFiberInDEV @ chunk-HOYDMXHX.js?v=e0bd2817:918
+performUnitOfWork @ chunk-HOYDMXHX.js?v=e0bd2817:9394
+workLoopSync @ chunk-HOYDMXHX.js?v=e0bd2817:9255
+renderRootSync @ chunk-HOYDMXHX.js?v=e0bd2817:9238
+performWorkOnRoot @ chunk-HOYDMXHX.js?v=e0bd2817:8846
+performWorkOnRootViaSchedulerTask @ chunk-HOYDMXHX.js?v=e0bd2817:2036
+performWorkUntilDeadline @ chunk-HOYDMXHX.js?v=e0bd2817:238Understand this error
+chunk-HOYDMXHX.js?v=e0bd2817:1871 Uncaught Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
+    at getRootForUpdatedFiber (chunk-HOYDMXHX.js?v=e0bd2817:1871:128)
+    at enqueueConcurrentRenderForLane (chunk-HOYDMXHX.js?v=e0bd2817:1859:16)
+    at forceStoreRerender (chunk-HOYDMXHX.js?v=e0bd2817:3719:20)
+    at updateStoreInstance (chunk-HOYDMXHX.js?v=e0bd2817:3701:41)
+    at react-stack-bottom-frame (chunk-HOYDMXHX.js?v=e0bd2817:10537:20)
+    at runWithFiberInDEV (chunk-HOYDMXHX.js?v=e0bd2817:918:18)
+    at commitHookEffectListMount (chunk-HOYDMXHX.js?v=e0bd2817:6958:123)
+    at commitHookPassiveMountEffects (chunk-HOYDMXHX.js?v=e0bd2817:7016:60)
+    at commitPassiveMountOnFiber (chunk-HOYDMXHX.js?v=e0bd2817:8302:29)
+    at recursivelyTraversePassiveMountEffects (chunk-HOYDMXHX.js?v=e0bd2817:8283:13)
+getRootForUpdatedFiber @ chunk-HOYDMXHX.js?v=e0bd2817:1871
+enqueueConcurrentRenderForLane @ chunk-HOYDMXHX.js?v=e0bd2817:1859
+forceStoreRerender @ chunk-HOYDMXHX.js?v=e0bd2817:3719
+updateStoreInstance @ chunk-HOYDMXHX.js?v=e0bd2817:3701
+react-stack-bottom-frame @ chunk-HOYDMXHX.js?v=e0bd2817:10537
+runWithFiberInDEV @ chunk-HOYDMXHX.js?v=e0bd2817:918
+commitHookEffectListMount @ chunk-HOYDMXHX.js?v=e0bd2817:6958
+commitHookPassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:7016
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8302
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8296
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8358
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8385
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8385
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8385
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8385
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8296
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8385
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8296
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8385
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8296
+recursivelyTraversePassiveMountEffects @ chunk-HOYDMXHX.js?v=e0bd2817:8283
+commitPassiveMountOnFiber @ chunk-HOYDMXHX.js?v=e0bd2817:8306
+flushPassiveEffects @ chunk-HOYDMXHX.js?v=e0bd2817:9682
+commitRootImpl @ chunk-HOYDMXHX.js?v=e0bd2817:9633
+commitRoot @ chunk-HOYDMXHX.js?v=e0bd2817:9552
+commitRootWhenReady @ chunk-HOYDMXHX.js?v=e0bd2817:9036
+performWorkOnRoot @ chunk-HOYDMXHX.js?v=e0bd2817:8980
+performSyncWorkOnRoot @ chunk-HOYDMXHX.js?v=e0bd2817:2048
+flushSyncWorkAcrossRoots_impl @ chunk-HOYDMXHX.js?v=e0bd2817:1956
+commitRootImpl @ chunk-HOYDMXHX.js?v=e0bd2817:9636
+commitRoot @ chunk-HOYDMXHX.js?v=e0bd2817:9552
+commitRootWhenReady @ chunk-HOYDMXHX.js?v=e0bd2817:9036
+performWorkOnRoot @ chunk-HOYDMXHX.js?v=e0bd2817:8980
+performWorkOnRootViaSchedulerTask @ chunk-HOYDMXHX.js?v=e0bd2817:2036
+performWorkUntilDeadline @ chunk-HOYDMXHX.js?v=e0bd2817:238Understand this error
+GameScene.tsx:206 Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
+    at getRootForUpdatedFiber (chunk-HOYDMXHX.js?v=e0bd2817:1871:128)
+    at enqueueConcurrentRenderForLane (chunk-HOYDMXHX.js?v=e0bd2817:1859:16)
+    at forceStoreRerender (chunk-HOYDMXHX.js?v=e0bd2817:3719:20)
+    at updateStoreInstance (chunk-HOYDMXHX.js?v=e0bd2817:3701:41)
+    at react-stack-bottom-frame (chunk-HOYDMXHX.js?v=e0bd2817:10537:20)
+    at runWithFiberInDEV (chunk-HOYDMXHX.js?v=e0bd2817:918:18)
+    at commitHookEffectListMount (chunk-HOYDMXHX.js?v=e0bd2817:6958:123)
+    at commitHookPassiveMountEffects (chunk-HOYDMXHX.js?v=e0bd2817:7016:60)
+    at commitPassiveMountOnFiber (chunk-HOYDMXHX.js?v=e0bd2817:8302:29)
+    at recursivelyTraversePassiveMountEffects (chunk-HOYDMXHX.js?v=e0bd2817:8283:13)
+
+The above error occurred in the <CanvasImpl> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+
+defaultOnCaughtError @ chunk-TPGJRR7W.js?v=e0bd2817:6264
+logCaughtError @ chunk-TPGJRR7W.js?v=e0bd2817:6296
+runWithFiberInDEV @ chunk-TPGJRR7W.js?v=e0bd2817:1485
+inst.componentDidCatch.update.callback @ chunk-TPGJRR7W.js?v=e0bd2817:6341
+callCallback @ chunk-TPGJRR7W.js?v=e0bd2817:4097
+commitCallbacks @ chunk-TPGJRR7W.js?v=e0bd2817:4109
+runWithFiberInDEV @ chunk-TPGJRR7W.js?v=e0bd2817:1485
+commitClassCallbacks @ chunk-TPGJRR7W.js?v=e0bd2817:8543
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:9011
+recursivelyTraverseLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:9682
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:8956
+recursivelyTraverseLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:9682
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:9096
+recursivelyTraverseLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:9682
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:9016
+flushLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:11174
+commitRoot @ chunk-TPGJRR7W.js?v=e0bd2817:11080
+commitRootWhenReady @ chunk-TPGJRR7W.js?v=e0bd2817:10512
+performWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:10457
+performWorkOnRootViaSchedulerTask @ chunk-TPGJRR7W.js?v=e0bd2817:11623
+performWorkUntilDeadline @ chunk-TPGJRR7W.js?v=e0bd2817:36
+<CanvasImpl>
+exports.jsx @ chunk-OBBQL43Q.js?v=e0bd2817:250
+Canvas @ chunk-HOYDMXHX.js?v=e0bd2817:14428
+react-stack-bottom-frame @ chunk-TPGJRR7W.js?v=e0bd2817:17424
+renderWithHooksAgain @ chunk-TPGJRR7W.js?v=e0bd2817:4281
+renderWithHooks @ chunk-TPGJRR7W.js?v=e0bd2817:4217
+updateFunctionComponent @ chunk-TPGJRR7W.js?v=e0bd2817:6619
+beginWork @ chunk-TPGJRR7W.js?v=e0bd2817:7654
+runWithFiberInDEV @ chunk-TPGJRR7W.js?v=e0bd2817:1485
+performUnitOfWork @ chunk-TPGJRR7W.js?v=e0bd2817:10868
+workLoopSync @ chunk-TPGJRR7W.js?v=e0bd2817:10728
+renderRootSync @ chunk-TPGJRR7W.js?v=e0bd2817:10711
+performWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:10330
+performSyncWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:11635
+flushSyncWorkAcrossRoots_impl @ chunk-TPGJRR7W.js?v=e0bd2817:11536
+processRootScheduleInMicrotask @ chunk-TPGJRR7W.js?v=e0bd2817:11558
+(anonymous) @ chunk-TPGJRR7W.js?v=e0bd2817:11649
+<Canvas>
+exports.jsxDEV @ react_jsx-dev-runtime.js?v=e0bd2817:250
+GameScene @ GameScene.tsx:206
+react-stack-bottom-frame @ chunk-TPGJRR7W.js?v=e0bd2817:17424
+renderWithHooksAgain @ chunk-TPGJRR7W.js?v=e0bd2817:4281
+renderWithHooks @ chunk-TPGJRR7W.js?v=e0bd2817:4217
+updateFunctionComponent @ chunk-TPGJRR7W.js?v=e0bd2817:6619
+beginWork @ chunk-TPGJRR7W.js?v=e0bd2817:7654
+runWithFiberInDEV @ chunk-TPGJRR7W.js?v=e0bd2817:1485
+performUnitOfWork @ chunk-TPGJRR7W.js?v=e0bd2817:10868
+workLoopSync @ chunk-TPGJRR7W.js?v=e0bd2817:10728
+renderRootSync @ chunk-TPGJRR7W.js?v=e0bd2817:10711
+performWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:10330
+performSyncWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:11635
+flushSyncWorkAcrossRoots_impl @ chunk-TPGJRR7W.js?v=e0bd2817:11536
+processRootScheduleInMicrotask @ chunk-TPGJRR7W.js?v=e0bd2817:11558
+(anonymous) @ chunk-TPGJRR7W.js?v=e0bd2817:11649
+<GameScene>
+exports.jsxDEV @ react_jsx-dev-runtime.js?v=e0bd2817:250
+App @ App.tsx:32
+react-stack-bottom-frame @ chunk-TPGJRR7W.js?v=e0bd2817:17424
+renderWithHooksAgain @ chunk-TPGJRR7W.js?v=e0bd2817:4281
+renderWithHooks @ chunk-TPGJRR7W.js?v=e0bd2817:4217
+updateFunctionComponent @ chunk-TPGJRR7W.js?v=e0bd2817:6619
+beginWork @ chunk-TPGJRR7W.js?v=e0bd2817:7654
+runWithFiberInDEV @ chunk-TPGJRR7W.js?v=e0bd2817:1485
+performUnitOfWork @ chunk-TPGJRR7W.js?v=e0bd2817:10868
+workLoopSync @ chunk-TPGJRR7W.js?v=e0bd2817:10728
+renderRootSync @ chunk-TPGJRR7W.js?v=e0bd2817:10711
+performWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:10330
+performSyncWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:11635
+flushSyncWorkAcrossRoots_impl @ chunk-TPGJRR7W.js?v=e0bd2817:11536
+processRootScheduleInMicrotask @ chunk-TPGJRR7W.js?v=e0bd2817:11558
+(anonymous) @ chunk-TPGJRR7W.js?v=e0bd2817:11649
+<App>
+exports.jsxDEV @ react_jsx-dev-runtime.js?v=e0bd2817:250
+(anonymous) @ main.tsx:8Understand this error
+ErrorBoundary.tsx:20 Game error: Error: Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate. React limits the number of nested updates to prevent infinite loops.
+    at getRootForUpdatedFiber (chunk-HOYDMXHX.js?v=e0bd2817:1871:128)
+    at enqueueConcurrentRenderForLane (chunk-HOYDMXHX.js?v=e0bd2817:1859:16)
+    at forceStoreRerender (chunk-HOYDMXHX.js?v=e0bd2817:3719:20)
+    at updateStoreInstance (chunk-HOYDMXHX.js?v=e0bd2817:3701:41)
+    at react-stack-bottom-frame (chunk-HOYDMXHX.js?v=e0bd2817:10537:20)
+    at runWithFiberInDEV (chunk-HOYDMXHX.js?v=e0bd2817:918:18)
+    at commitHookEffectListMount (chunk-HOYDMXHX.js?v=e0bd2817:6958:123)
+    at commitHookPassiveMountEffects (chunk-HOYDMXHX.js?v=e0bd2817:7016:60)
+    at commitPassiveMountOnFiber (chunk-HOYDMXHX.js?v=e0bd2817:8302:29)
+    at recursivelyTraversePassiveMountEffects (chunk-HOYDMXHX.js?v=e0bd2817:8283:13) {componentStack: '\n    at CanvasImpl (https://6f697112-98cc-49cd-9de…0-318j0i8ug37p.kirk.replit.dev/src/App.tsx:28:33)'}
+componentDidCatch @ ErrorBoundary.tsx:20
+react-stack-bottom-frame @ chunk-TPGJRR7W.js?v=e0bd2817:17458
+inst.componentDidCatch.update.callback @ chunk-TPGJRR7W.js?v=e0bd2817:6349
+callCallback @ chunk-TPGJRR7W.js?v=e0bd2817:4097
+commitCallbacks @ chunk-TPGJRR7W.js?v=e0bd2817:4109
+runWithFiberInDEV @ chunk-TPGJRR7W.js?v=e0bd2817:1485
+commitClassCallbacks @ chunk-TPGJRR7W.js?v=e0bd2817:8543
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:9011
+recursivelyTraverseLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:9682
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:8956
+recursivelyTraverseLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:9682
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:9096
+recursivelyTraverseLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:9682
+commitLayoutEffectOnFiber @ chunk-TPGJRR7W.js?v=e0bd2817:9016
+flushLayoutEffects @ chunk-TPGJRR7W.js?v=e0bd2817:11174
+commitRoot @ chunk-TPGJRR7W.js?v=e0bd2817:11080
+commitRootWhenReady @ chunk-TPGJRR7W.js?v=e0bd2817:10512
+performWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:10457
+performWorkOnRootViaSchedulerTask @ chunk-TPGJRR7W.js?v=e0bd2817:11623
+performWorkUntilDeadline @ chunk-TPGJRR7W.js?v=e0bd2817:36
+<ErrorBoundary>
+exports.jsxDEV @ react_jsx-dev-runtime.js?v=e0bd2817:250
+App @ App.tsx:31
+react-stack-bottom-frame @ chunk-TPGJRR7W.js?v=e0bd2817:17424
+renderWithHooksAgain @ chunk-TPGJRR7W.js?v=e0bd2817:4281
+renderWithHooks @ chunk-TPGJRR7W.js?v=e0bd2817:4217
+updateFunctionComponent @ chunk-TPGJRR7W.js?v=e0bd2817:6619
+beginWork @ chunk-TPGJRR7W.js?v=e0bd2817:7654
+runWithFiberInDEV @ chunk-TPGJRR7W.js?v=e0bd2817:1485
+performUnitOfWork @ chunk-TPGJRR7W.js?v=e0bd2817:10868
+workLoopSync @ chunk-TPGJRR7W.js?v=e0bd2817:10728
+renderRootSync @ chunk-TPGJRR7W.js?v=e0bd2817:10711
+performWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:10330
+performSyncWorkOnRoot @ chunk-TPGJRR7W.js?v=e0bd2817:11635
+flushSyncWorkAcrossRoots_impl @ chunk-TPGJRR7W.js?v=e0bd2817:11536
+processRootScheduleInMicrotask @ chunk-TPGJRR7W.js?v=e0bd2817:11558
+(anonymous) @ chunk-TPGJRR7W.js?v=e0bd2817:11649
+<App>
+exports.jsxDEV @ react_jsx-dev-runtime.js?v=e0bd2817:250
+(anonymous) @ main.tsx:8Understand this error
+chunk-CQJ2NBFQ.js?v=e0bd2817:40155 THREE.WebGLRenderer: Context Lost.
